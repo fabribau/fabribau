@@ -1,0 +1,596 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import fabriCvImage from '../assets/images/Fabri-cv.png';
+import { ui } from '../i18n/es/ui';
+import type { TimelineItem, SkillCategory, Hobby } from '../types/index';
+
+// Data — these can be moved to a data file later
+const experience: TimelineItem[] = [
+  {
+    title: 'Desarrollador Fullstack Senior',
+    organization: 'Empresa de Tecnología',
+    startDate: '2023',
+    description: 'Desarrollo de aplicaciones web con React, Node.js y TypeScript. Liderazgo técnico de equipos de desarrollo.',
+    stack: ['React', 'Node.js', 'TypeScript', 'PostgreSQL', 'Docker'],
+    achievements: ['Migración exitosa de monolito a microservicios', 'Reducción del 40% en tiempos de carga'],
+  },
+  {
+    title: 'Docente Universitario',
+    organization: 'Universidad',
+    startDate: '2021',
+    description: 'Dictado de materias de programación, estructuras de datos y desarrollo web. Tutoría de tesis de grado.',
+    stack: ['Python', 'JavaScript', 'Java'],
+    achievements: ['Diseño de plan de estudios actualizado', 'Integración de IA en la enseñanza'],
+  },
+  {
+    title: 'Desarrollador Web',
+    organization: 'Freelance',
+    startDate: '2019',
+    endDate: '2023',
+    description: 'Desarrollo de sitios web y aplicaciones para clientes diversos. Diseño UX/UI y gestión de proyectos.',
+    stack: ['React', 'Next.js', 'WordPress', 'Tailwind CSS'],
+  },
+];
+
+const education: TimelineItem[] = [
+  {
+    title: 'Ingeniería en Informática',
+    organization: 'Universidad',
+    startDate: '2015',
+    endDate: '2021',
+    description: 'Graduado con honores. Tesis sobre aplicaciones de inteligencia artificial en la educación.',
+    achievements: ['Promedio destacado', 'Abanderado de la facultad'],
+  },
+];
+
+const skillCategories: SkillCategory[] = [
+  {
+    name: 'Lenguajes',
+    skills: [
+      { name: 'TypeScript', level: 5 },
+      { name: 'JavaScript', level: 5 },
+      { name: 'Python', level: 4 },
+      { name: 'Java', level: 3 },
+      { name: 'SQL', level: 4 },
+    ],
+  },
+  {
+    name: 'Frameworks',
+    skills: [
+      { name: 'React / Next.js', level: 5 },
+      { name: 'Astro', level: 4 },
+      { name: 'Node.js', level: 5 },
+      { name: 'Tailwind CSS', level: 5 },
+      { name: 'Express', level: 4 },
+    ],
+  },
+  {
+    name: 'IA & Datos',
+    skills: [
+      { name: 'OpenAI API', level: 4 },
+      { name: 'LangChain', level: 3 },
+      { name: 'Vercel AI SDK', level: 4 },
+      { name: 'PostgreSQL', level: 4 },
+    ],
+  },
+  {
+    name: 'Herramientas',
+    skills: [
+      { name: 'Git', level: 5 },
+      { name: 'Docker', level: 4 },
+      { name: 'Vercel', level: 5 },
+      { name: 'VS Code', level: 5 },
+      { name: 'Figma', level: 3 },
+    ],
+  },
+  {
+    name: 'Idiomas',
+    skills: [
+      { name: 'Español', level: 5 },
+      { name: 'Inglés', level: 4 },
+    ],
+  },
+];
+
+const hobbies: Hobby[] = [
+  { name: 'Música', description: 'Tocar guitarra y descubrir música nueva', emoji: '🎸' },
+  { name: 'Lectura', description: 'Ciencia ficción, filosofía y divulgación tecnológica', emoji: '📚' },
+  { name: 'Gaming', description: 'Videojuegos narrativos y de estrategia', emoji: '🎮' },
+  { name: 'Café', description: 'Explorar métodos de preparación y cafés de especialidad', emoji: '☕' },
+  { name: 'Viajes', description: 'Conocer culturas nuevas y probar comida local', emoji: '✈️' },
+  { name: 'Open Source', description: 'Contribuir a proyectos que uso y me gustan', emoji: '💻' },
+];
+---
+
+<BaseLayout title={ui.about.title} description={ui.about.description}>
+  <section class="about-page container-prose">
+    <!-- Intro -->
+    <header class="about-header animate-fade-up">
+      <h1 class="page-title">{ui.about.title}</h1>
+      <div class="intro-section">
+        <div class="intro-text">
+          <p>
+            Soy <strong>Fabrizio José Riera Bauer</strong>, ingeniero en informática, desarrollador fullstack y docente universitario.
+            Me apasiona construir software con propósito, enseñar lo que aprendo y explorar cómo la tecnología puede mejorar la vida de las personas.
+          </p>
+          <p>
+            Creo que el buen código se escribe con empatía — pensando en quien lo va a leer, en quien lo va a usar y en quien lo va a mantener.
+          </p>
+        </div>
+        <div>
+          <Image
+            src={fabriCvImage}
+            alt="Foto de perfil de Fabrizio Riera Bauer"
+            width={240}
+            height={240}
+            class="avatar-image"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </header>
+
+    <!-- Values -->
+    <section class="section animate-fade-up animate-delay-1">
+      <h2 class="section-title">{ui.about.values}</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <span class="value-emoji">🎯</span>
+          <h3>Propósito</h3>
+          <p>Construyo cosas que resuelven problemas reales, no solo por demostrar que puedo.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-emoji">🤝</span>
+          <h3>Colaboración</h3>
+          <p>El mejor software se construye en equipo. Escuchar es tan importante como codear.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-emoji">📖</span>
+          <h3>Aprendizaje continuo</h3>
+          <p>Cada proyecto es una oportunidad de aprender algo nuevo y compartirlo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Timeline -->
+    <section class="section animate-fade-up animate-delay-2">
+      <h2 class="section-title">{ui.about.experience}</h2>
+      <div class="timeline">
+        {experience.map((item) => (
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3 class="timeline-title">{item.title}</h3>
+                <span class="timeline-date">{item.startDate}{item.endDate ? ` — ${item.endDate}` : ' — Presente'}</span>
+              </div>
+              <p class="timeline-org">{item.organization}</p>
+              <p class="timeline-desc">{item.description}</p>
+              {item.stack && (
+                <div class="timeline-stack">
+                  {item.stack.map((tech) => <span class="tech-chip">{tech}</span>)}
+                </div>
+              )}
+              {item.achievements && (
+                <ul class="timeline-achievements">
+                  {item.achievements.map((a) => <li>{a}</li>)}
+                </ul>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Education Timeline -->
+    <section class="section">
+      <h2 class="section-title">{ui.about.education}</h2>
+      <div class="timeline">
+        {education.map((item) => (
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <h3 class="timeline-title">{item.title}</h3>
+                <span class="timeline-date">{item.startDate}{item.endDate ? ` — ${item.endDate}` : ' — Presente'}</span>
+              </div>
+              <p class="timeline-org">{item.organization}</p>
+              <p class="timeline-desc">{item.description}</p>
+              {item.achievements && (
+                <ul class="timeline-achievements">
+                  {item.achievements.map((a) => <li>{a}</li>)}
+                </ul>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="section">
+      <h2 class="section-title">{ui.about.skills}</h2>
+      <div class="skills-grid">
+        {skillCategories.map((category) => (
+          <div class="skill-category">
+            <h3 class="category-name">{category.name}</h3>
+            <div class="skill-list">
+              {category.skills.map((skill) => (
+                <div class="skill-item">
+                  <span class="skill-name">{skill.name}</span>
+                  <div class="skill-bar">
+                    <div class="skill-fill" style={`width: ${(skill.level / 5) * 100}%`}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Hobbies -->
+    <section class="section">
+      <h2 class="section-title">{ui.about.hobbies}</h2>
+      <div class="hobbies-grid">
+        {hobbies.map((hobby) => (
+          <div class="hobby-card">
+            <span class="hobby-emoji">{hobby.emoji}</span>
+            <h3 class="hobby-name">{hobby.name}</h3>
+            <p class="hobby-desc">{hobby.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- CV Download -->
+    <section class="section cv-section">
+      <a href="/cv/CV-FABRIZIO RIERA BAUER.pdf" download class="cv-button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cv-icon">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7,10 12,15 17,10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        {ui.about.downloadCV}
+      </a>
+    </section>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-page {
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .page-title {
+    font-size: 2.25rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Intro */
+  .intro-section {
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+  }
+
+  .intro-text {
+    flex: 1;
+  }
+
+  .intro-text p {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .intro-text strong {
+    color: var(--color-text);
+  }
+
+  .avatar-image {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  /* Values */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .value-card {
+    padding: 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    transition: all 200ms ease;
+  }
+
+  .value-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .value-emoji {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .value-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .value-card p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Section */
+  .section {
+    margin-top: 3rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    background: var(--color-border);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-marker {
+    position: absolute;
+    left: -1.75rem;
+    top: 0.5rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 2px solid var(--color-bg);
+    z-index: 1;
+  }
+
+  .timeline-content {
+    padding: 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+  }
+
+  .timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .timeline-date {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .timeline-org {
+    font-size: 0.875rem;
+    color: var(--color-accent);
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .timeline-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-top: 0.75rem;
+  }
+
+  .tech-chip {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .timeline-achievements {
+    margin: 0.75rem 0 0;
+    padding-left: 1rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .timeline-achievements li {
+    margin-bottom: 0.25rem;
+  }
+
+  /* Skills */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    padding: 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+  }
+
+  .category-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-accent);
+  }
+
+  .skill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .skill-name {
+    font-size: 0.8125rem;
+    color: var(--color-text);
+    min-width: 110px;
+    font-weight: 500;
+  }
+
+  .skill-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--color-surface-alt);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  /* Hobbies */
+  .hobbies-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .hobby-card {
+    padding: 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    text-align: center;
+    transition: all 200ms ease;
+  }
+
+  .hobby-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .hobby-emoji {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .hobby-name {
+    font-size: 0.9375rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .hobby-desc {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* CV Button */
+  .cv-section {
+    text-align: center;
+    padding: 2.5rem 0;
+  }
+
+  .cv-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 2rem;
+    background: var(--color-accent);
+    color: white;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 200ms ease;
+  }
+
+  .cv-button:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+    color: white;
+  }
+
+  .cv-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .intro-section {
+      flex-direction: column-reverse;
+      align-items: center;
+      text-align: center;
+    }
+
+    .values-grid,
+    .hobbies-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .timeline-header {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+</style>

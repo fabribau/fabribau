@@ -1,0 +1,53 @@
+---
+title: "TypeScript en 2025: lo que todo dev debería saber"
+description: "Un repaso de las features más importantes de TypeScript moderno, desde satisfies hasta template literal types."
+pubDate: 2025-02-15
+tags: ["typescript", "programación", "tutorial"]
+featured: false
+coverImage: "../../assets/images/blog/typescript-en-2025.png"
+---
+
+TypeScript sigue evolucionando y cada vez trae más herramientas útiles. En este post repaso las features más relevantes que uso día a día.
+
+## El operador `satisfies`
+
+Una de las adiciones más útiles de TypeScript 4.9. Te permite validar que un valor cumple con un tipo **sin perder el tipo inferido**:
+
+```typescript
+const config = {
+  port: 3000,
+  host: 'localhost',
+  debug: true,
+} satisfies Record<string, string | number | boolean>;
+
+// config.port sigue siendo number, no string | number | boolean
+```
+
+## Template Literal Types
+
+Perfectos para crear tipos de strings más específicos:
+
+```typescript
+type Route = `/api/${string}`;
+type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
+type Endpoint = `${HTTPMethod} ${Route}`;
+// "GET /api/users" ✅
+// "PATCH /api/users" ❌
+```
+
+## Discriminated Unions
+
+Mi patrón favorito para manejar estados en la UI:
+
+```typescript
+type AsyncState<T> =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'success'; data: T }
+  | { status: 'error'; error: Error };
+```
+
+## Conclusión
+
+TypeScript no es solo "JavaScript con tipos". Es una herramienta que, bien usada, hace que tu código sea más seguro, más legible y más fácil de mantener.

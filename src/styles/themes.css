@@ -1,0 +1,53 @@
+/* ========================================
+   FabRiBau — Theme Variables (Dark/Light)
+   ======================================== */
+
+:root {
+  /* Dark theme (default) */
+  --color-bg: #0f0d0b;
+  --color-surface: #1a1714;
+  --color-surface-alt: #252019;
+  --color-border: #2e2820;
+  --color-text: #f0ebe3;
+  --color-text-muted: #9c9080;
+  --color-accent: #e8854a;
+  --color-accent-hover: #d4703a;
+  --color-accent-soft: #e8854a22;
+  --color-code-bg: #161310;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 8px 30px rgba(232, 133, 74, 0.08);
+}
+
+.light {
+  --color-bg: #faf7f2;
+  --color-surface: #f2ece2;
+  --color-surface-alt: #e8dfd0;
+  --color-border: #d4c9b8;
+  --color-text: #1a1512;
+  --color-text-muted: #6b5e50;
+  --color-accent: #c45e25;
+  --color-accent-hover: #a84d1c;
+  --color-accent-soft: #c45e2515;
+  --color-code-bg: #ede7db;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --shadow-card-hover: 0 8px 30px rgba(196, 94, 37, 0.06);
+}
+
+/* Smooth theme transitions */
+html,
+html *,
+html *::before,
+html *::after {
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
+}

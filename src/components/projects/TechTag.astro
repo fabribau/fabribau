@@ -1,0 +1,24 @@
+---
+interface Props {
+  tech: string;
+}
+
+const { tech } = Astro.props;
+---
+
+<span class="tech-tag">{tech}</span>
+
+<style>
+  .tech-tag {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    font-family: var(--font-mono);
+    line-height: 1.4;
+  }
+</style>

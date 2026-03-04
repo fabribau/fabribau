@@ -1,0 +1,55 @@
+---
+title: "Cómo monté mi sitio personal con Astro y por qué lo recomiendo"
+description: "Un recorrido por las decisiones técnicas detrás de FabRiBau: Astro, Tailwind v4, MDX y deploy en Vercel."
+pubDate: 2025-03-01
+tags: ["astro", "desarrollo-web", "tailwind"]
+featured: true
+coverImage: "../../assets/images/blog/mi-sitio-con-astro.png"
+---
+
+Después de probar varias opciones (Next.js, Hugo, Gatsby), finalmente elegí **Astro** para mi sitio personal. En este post te cuento por qué.
+
+## ¿Por qué Astro?
+
+Astro tiene algo que ningún otro framework me daba: la posibilidad de escribir contenido en Markdown, generar páginas estáticas ultra rápidas, y _solo_ cargar JavaScript cuando realmente lo necesito.
+
+### Las ventajas que encontré
+
+- **Rendimiento de fábrica**: sin JavaScript innecesario en el cliente
+- **Content Collections**: schemas tipados con Zod para mi blog y proyectos
+- **Islands Architecture**: puedo usar componentes interactivos solo donde hagan falta
+- **MDX nativo**: código ejecutable dentro de mis posts
+
+## El stack que elegí
+
+| Herramienta | Motivo |
+|---|---|
+| Astro | Framework principal |
+| Tailwind v4 | Utility-first CSS moderno |
+| TypeScript | Tipos estrictos en todo el proyecto |
+| Vercel | Deploy automático + Analytics |
+
+## Cómo organicé el contenido
+
+Uso Content Collections de Astro para tipar el frontmatter de cada post. Esto me da autocompletado, validación y errores en build time si algo falta.
+
+```typescript
+const blog = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string().max(160),
+    pubDate: z.coerce.date(),
+    tags: z.array(z.string()),
+  }),
+});
+```
+
+## Lo que viene
+
+Próximamente quiero agregar:
+- Un sistema de likes con Neon Postgres
+- Generación dinámica de Open Graph images
+- Una sección "Ask About Me" con IA
+
+Si estás pensando en armar tu propio sitio, **Astro es una excelente opción**. Rápido, flexible y con una comunidad increíble.

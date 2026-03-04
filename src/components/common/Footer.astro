@@ -1,0 +1,151 @@
+---
+import { ui } from '../../i18n/es/ui';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer-inner container-wide">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <span class="logo-fab">Fab</span><span class="logo-ri">Ri</span><span class="logo-bau">Bau</span>
+        </a>
+        <p class="footer-tagline">{ui.siteDescription}</p>
+      </div>
+      <div class="footer-nav">
+        <div class="footer-col">
+          <h4 class="footer-heading">Navegación</h4>
+          <a href="/blog">{ui.nav.blog}</a>
+          <a href="/projects">{ui.nav.projects}</a>
+          <a href="/about">{ui.nav.about}</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-heading">Conectar</h4>
+          <a href="/contact">{ui.nav.contact}</a>
+          <a href="https://github.com/fabribau" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://linkedin.com/in/fabrizio-bauer" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>
+        {ui.footer.madeWith} <span class="heart">♥</span> {ui.footer.and} <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a> {ui.footer.by}
+      </p>
+      <p class="copyright">© {currentYear} Fabrizio Riera Bauer. {ui.footer.rights}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: 6rem;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 2rem;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-brand {
+    max-width: 400px;
+  }
+
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .footer-logo .logo-ri {
+    color: var(--color-accent);
+  }
+
+  .footer-tagline {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 3rem;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-heading {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-col a {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .footer-col a:hover {
+    color: var(--color-accent);
+  }
+
+  .footer-bottom {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .footer-bottom a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .footer-bottom a:hover {
+    text-decoration: underline;
+  }
+
+  .heart {
+    color: var(--color-accent);
+  }
+
+  .copyright {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .footer-top {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .footer-nav {
+      gap: 2rem;
+    }
+  }
+</style>

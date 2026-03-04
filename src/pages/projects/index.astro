@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import { getAllProjects } from '../../lib/content';
+import { ui } from '../../i18n/es/ui';
+
+const projects = await getAllProjects();
+
+const statusFilters = [
+  { key: 'all', label: ui.projects.filterAll },
+  { key: 'completed', label: ui.projects.filterCompleted },
+  { key: 'in-progress', label: ui.projects.filterInProgress },
+  { key: 'archived', label: ui.projects.filterArchived },
+];
+---
+
+<BaseLayout title={ui.projects.title} description={ui.projects.description}>
+  <section class="projects-page container-wide">
+    <header class="page-header animate-fade-up">
+      <h1 class="page-title">{ui.projects.title}</h1>
+      <p class="page-description">{ui.projects.description}</p>
+    </header>
+
+    <!-- Status filter -->
+    <div class="status-filter animate-fade-up animate-delay-1">
+      {statusFilters.map((filter) => (
+        <button
+          class:list={['filter-btn', { active: filter.key === 'all' }]}
+          data-status={filter.key}
+        >
+          {filter.label}
+        </button>
+      ))}
+    </div>
+
+    <!-- Projects grid -->
+    <div class="projects-grid animate-fade-up animate-delay-2">
+      {projects.map((project) => (
+        <div class="project-item" data-status={project.data.status}>
+          <ProjectCard
+            title={project.data.title}
+            description={project.data.description}
+            status={project.data.status}
+            stack={project.data.stack}
+            slug={project.slug}
+            githubUrl={project.data.githubUrl}
+            demoUrl={project.data.demoUrl}
+          />
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .projects-page {
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .page-title {
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-description {
+    font-size: 1.0625rem;
+    color: var(--color-text-muted);
+    max-width: 600px;
+  }
+
+  .status-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .filter-btn {
+    padding: 0.375rem 0.875rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 200ms ease;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: var(--color-accent-soft);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 1024px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectItems = document.querySelectorAll('.project-item');
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const status = btn.getAttribute('data-status');
+
+      filterBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      projectItems.forEach((item) => {
+        if (status === 'all' || item.getAttribute('data-status') === status) {
+          (item as HTMLElement).style.display = '';
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
