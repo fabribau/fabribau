@@ -1,105 +1,162 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
-import fabriCvImage from '../assets/images/Fabri-cv.png';
-import { ui } from '../i18n/es/ui';
-import type { TimelineItem, SkillCategory, Hobby } from '../types/index';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import fabriCvImage from "../assets/images/Fabri-cv.png";
+import { ui } from "../i18n/es/ui";
+import type { TimelineItem, SkillCategory, Hobby } from "../types/index";
 
 // Data — these can be moved to a data file later
 const experience: TimelineItem[] = [
   {
-    title: 'Desarrollador Fullstack Senior',
-    organization: 'Empresa de Tecnología',
-    startDate: '2023',
-    description: 'Desarrollo de aplicaciones web con React, Node.js y TypeScript. Liderazgo técnico de equipos de desarrollo.',
-    stack: ['React', 'Node.js', 'TypeScript', 'PostgreSQL', 'Docker'],
-    achievements: ['Migración exitosa de monolito a microservicios', 'Reducción del 40% en tiempos de carga'],
+    title: "Docente Auxiliar",
+    organization: "Universidad Nacional de San Luis",
+    startDate: "Sep. 2022",
+    description:
+      "Desarrollo de funciones docentes en el Área de Servicios y el Área de Formación Inicial en Informática del Departamento de Informática (FCFMyN - UNSL). Dictado de clases prácticas y de consulta, toma y corrección de exámenes, desarrollo de evaluaciones y trabajos prácticos.",
+    stack: ["Python", "JavaScript", "Java"],
+    achievements: [
+      "Materias dictadas: Resolución de Problemas y Algoritmos, Fundamentos de la Informática, Programación II y Programación III",
+    ],
   },
   {
-    title: 'Docente Universitario',
-    organization: 'Universidad',
-    startDate: '2021',
-    description: 'Dictado de materias de programación, estructuras de datos y desarrollo web. Tutoría de tesis de grado.',
-    stack: ['Python', 'JavaScript', 'Java'],
-    achievements: ['Diseño de plan de estudios actualizado', 'Integración de IA en la enseñanza'],
+    title: "Desarrollador FullStack Trainee-Junior",
+    organization: "RunaId",
+    startDate: "Oct. 2024",
+    endDate: "Dic. 2024",
+    description:
+      "Participé en etapas de análisis, diseño y desarrollo de múltiples proyectos como parte de mis Prácticas Profesionales Supervisadas. Formé parte de proyectos como Agenda Médica para el Círculo Médico de San Luis y el sistema GestionAR, una plataforma de agro-inversiones integrada con CRM.",
+    stack: ["Groovy", "Grails", "PostgreSQL", "JavaScript", "Bootstrap"],
+    achievements: [
+      "Contribución desde el primer día en la implementación de nuevas funcionalidades y corrección de bugs en sistemas existentes",
+      "Colaboración en equipo utilizando metodologías ágiles y herramientas de control de versiones",
+      "Integración con sistemas externos como recetarios digitales, CRM y sistemas RENAPER",
+    ],
   },
   {
-    title: 'Desarrollador Web',
-    organization: 'Freelance',
-    startDate: '2019',
-    endDate: '2023',
-    description: 'Desarrollo de sitios web y aplicaciones para clientes diversos. Diseño UX/UI y gestión de proyectos.',
-    stack: ['React', 'Next.js', 'WordPress', 'Tailwind CSS'],
+    title: "Desarrollador FullStack & Administrador de Sistemas",
+    organization: "Secretaría de Deportes de la Provincia de San Luis",
+    startDate: "Mar. 2024",
+    endDate: "Oct. 2024",
+    description:
+      "Captura de requerimientos, análisis e implementación del sistema para las Olimpiadas Escolares de Atletismo, utilizado en las ediciones 2024 y 2025. Administración de torneos, etapas, planillas y publicación de resultados.",
+    stack: [
+      "Java",
+      "Spring Boot",
+      "Next.js",
+      "MySQL",
+      "Hibernate",
+      "MaterialUI",
+    ],
+    achievements: [
+      "Reducción de tiempos de carga de inscripciones, generación de series y carga de resultados",
+      "Automatización de procesos que antes se hacían manualmente",
+      "La administración de resultados se volvió más eficiente y menos propensa a errores, mejorando la experiencia tanto para organizadores como para participantes",
+    ],
   },
 ];
 
 const education: TimelineItem[] = [
   {
-    title: 'Ingeniería en Informática',
-    organization: 'Universidad',
-    startDate: '2015',
-    endDate: '2021',
-    description: 'Graduado con honores. Tesis sobre aplicaciones de inteligencia artificial en la educación.',
-    achievements: ['Promedio destacado', 'Abanderado de la facultad'],
+    title: "Ingeniería en Informática",
+    organization: "Universidad Nacional de San Luis",
+    startDate: "2018",
+    endDate: "2025",
+    description:
+      'Tesis: "Asistente Conversacional basado en IA para la Prevención de Apuestas Online".',
+    achievements: [
+      "Miembro del cuerpo de bandera de la Facultad de Ciencias Físico Matemáticas y Naturales (FCFMyN)",
+      "Promedio con aplazos: 8,91 — Promedio sin aplazos: 9,05",
+      "Publicación de artículos en congresos nacionales, participación en eventos académicos y proyectos de investigación.",
+    ],
   },
 ];
 
 const skillCategories: SkillCategory[] = [
   {
-    name: 'Lenguajes',
+    name: "Lenguajes",
     skills: [
-      { name: 'TypeScript', level: 5 },
-      { name: 'JavaScript', level: 5 },
-      { name: 'Python', level: 4 },
-      { name: 'Java', level: 3 },
-      { name: 'SQL', level: 4 },
+      { name: "JavaScript", level: 4 },
+      { name: "Java", level: 4 },
+      { name: "Python", level: 3 },
+      { name: "SQL", level: 4 },
+      { name: "Go", level: 3 },
+      { name: "C", level: 2 },
     ],
   },
   {
-    name: 'Frameworks',
+    name: "Frameworks",
     skills: [
-      { name: 'React / Next.js', level: 5 },
-      { name: 'Astro', level: 4 },
-      { name: 'Node.js', level: 5 },
-      { name: 'Tailwind CSS', level: 5 },
-      { name: 'Express', level: 4 },
+      { name: "Next.js / React", level: 4 },
+      { name: "Spring Boot", level: 4 },
+      { name: "Astro", level: 4 },
+      { name: "Node.js", level: 3 },
+      { name: "FastAPI", level: 3 },
+      { name: "Gin", level: 3 },
     ],
   },
   {
-    name: 'IA & Datos',
+    name: "IA & Datos",
     skills: [
-      { name: 'OpenAI API', level: 4 },
-      { name: 'LangChain', level: 3 },
-      { name: 'Vercel AI SDK', level: 4 },
-      { name: 'PostgreSQL', level: 4 },
+      { name: "PostgreSQL", level: 4 },
+      { name: "RAG & Embeddings", level: 4 },
+      { name: "Vercel AI SDK", level: 4 },
+      { name: "Neon / Supabase", level: 3 },
+      { name: "Integración con LLMs", level: 3 },
+      { name: "Google AI", level: 3 },
     ],
   },
   {
-    name: 'Herramientas',
+    name: "Herramientas",
     skills: [
-      { name: 'Git', level: 5 },
-      { name: 'Docker', level: 4 },
-      { name: 'Vercel', level: 5 },
-      { name: 'VS Code', level: 5 },
-      { name: 'Figma', level: 3 },
+      { name: "Vercel", level: 5 },
+      { name: "Git / GitHub", level: 4 },
+      { name: "Postman", level: 4 },
+      { name: "Scrum", level: 4 },
+      { name: "Docker", level: 3 },
     ],
   },
   {
-    name: 'Idiomas',
+    name: "Idiomas",
     skills: [
-      { name: 'Español', level: 5 },
-      { name: 'Inglés', level: 4 },
+      { name: "Español", level: 5 },
+      { name: "Inglés (B1)", level: 3 },
     ],
   },
 ];
 
 const hobbies: Hobby[] = [
-  { name: 'Música', description: 'Tocar guitarra y descubrir música nueva', emoji: '🎸' },
-  { name: 'Lectura', description: 'Ciencia ficción, filosofía y divulgación tecnológica', emoji: '📚' },
-  { name: 'Gaming', description: 'Videojuegos narrativos y de estrategia', emoji: '🎮' },
-  { name: 'Café', description: 'Explorar métodos de preparación y cafés de especialidad', emoji: '☕' },
-  { name: 'Viajes', description: 'Conocer culturas nuevas y probar comida local', emoji: '✈️' },
-  { name: 'Open Source', description: 'Contribuir a proyectos que uso y me gustan', emoji: '💻' },
+  {
+    name: "Fútbol",
+    description:
+      "Fanático de River Plate, disfruto jugando y viendo partidos con amigos",
+    emoji: "⚽",
+  },
+  {
+    name: "Desarrollo de Software",
+    description:
+      "Suelo perder la noción del tiempo programando y aprendiendo nuevas tecnologías",
+    emoji: "💻",
+  },
+  {
+    name: "Lectura y noticias tech",
+    description: "Desarrollo personal, filosofía y divulgación tecnológica",
+    emoji: "📚",
+  },
+  {
+    name: "Cocinar y comer",
+    description: "Me encanta probar nuevas recetas y sabores",
+    emoji: "🍟",
+  },
+  {
+    name: "Vino",
+    description: "Me gusta descubrir nuevos vinos y aprender sobre sus características",
+    emoji: "🍷",
+  },
+  {
+    name: "Viajes",
+    description: "Conocer nuevos lugares y probar nuevas comidas",
+    emoji: "✈️",
+  },
 ];
 ---
 
@@ -111,14 +168,22 @@ const hobbies: Hobby[] = [
       <div class="intro-section">
         <div class="intro-text">
           <p>
-            Soy <strong>Fabrizio José Riera Bauer</strong>, ingeniero en informática, desarrollador fullstack y docente universitario.
-            Me apasiona construir software con propósito, enseñar lo que aprendo y explorar cómo la tecnología puede mejorar la vida de las personas.
+            Soy <strong>Fabrizio José Riera Bauer</strong>, ingeniero en
+            informática, desarrollador fullstack y docente universitario en la
+            Universidad Nacional de San Luis. Con capacidad para transformar
+            requerimientos complejos en soluciones de software eficientes, me
+            apasiona construir software con propósito — desde aplicaciones web
+            hasta asistentes de IA con RAG — participando en todas las etapas
+            del ciclo de vida del software.
           </p>
           <p>
-            Creo que el buen código se escribe con empatía — pensando en quien lo va a leer, en quien lo va a usar y en quien lo va a mantener.
+            Creo que el buen código se escribe con empatía: pensando en quien lo
+            va a leer, en quien lo va a usar y en quien lo va a mantener. Busco
+            combinar calidad técnica con impacto real, aportando innovación y
+            enseñando lo que aprendo en el camino.
           </p>
         </div>
-        <div>
+        <div class="intro-visual">
           <Image
             src={fabriCvImage}
             alt="Foto de perfil de Fabrizio Riera Bauer"
@@ -127,6 +192,14 @@ const hobbies: Hobby[] = [
             class="avatar-image"
             loading="eager"
           />
+          <a href="/cv/CV-FABRIZIO RIERA BAUER.pdf" download class="cv-button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cv-icon">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7,10 12,15 17,10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            {ui.about.downloadCV}
+          </a>
         </div>
       </div>
     </header>
@@ -138,17 +211,26 @@ const hobbies: Hobby[] = [
         <div class="value-card">
           <span class="value-emoji">🎯</span>
           <h3>Propósito</h3>
-          <p>Construyo cosas que resuelven problemas reales, no solo por demostrar que puedo.</p>
+          <p>
+            Busco construir sistemas que resuelvan problemas reales. El código
+            es una herramienta para lograr impacto positivo.
+          </p>
         </div>
         <div class="value-card">
           <span class="value-emoji">🤝</span>
           <h3>Colaboración</h3>
-          <p>El mejor software se construye en equipo. Escuchar es tan importante como codear.</p>
+          <p>
+            El mejor software se construye en equipo. Escuchar es tan importante
+            como codear.
+          </p>
         </div>
         <div class="value-card">
           <span class="value-emoji">📖</span>
           <h3>Aprendizaje continuo</h3>
-          <p>Cada proyecto es una oportunidad de aprender algo nuevo y compartirlo.</p>
+          <p>
+            Cada proyecto es una oportunidad de aprender algo nuevo y
+            compartirlo.
+          </p>
         </div>
       </div>
     </section>
@@ -157,29 +239,38 @@ const hobbies: Hobby[] = [
     <section class="section animate-fade-up animate-delay-2">
       <h2 class="section-title">{ui.about.experience}</h2>
       <div class="timeline">
-        {experience.map((item) => (
-          <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <div class="timeline-header">
-                <h3 class="timeline-title">{item.title}</h3>
-                <span class="timeline-date">{item.startDate}{item.endDate ? ` — ${item.endDate}` : ' — Presente'}</span>
-              </div>
-              <p class="timeline-org">{item.organization}</p>
-              <p class="timeline-desc">{item.description}</p>
-              {item.stack && (
-                <div class="timeline-stack">
-                  {item.stack.map((tech) => <span class="tech-chip">{tech}</span>)}
+        {
+          experience.map((item) => (
+            <div class="timeline-item">
+              <div class="timeline-marker" />
+              <div class="timeline-content">
+                <div class="timeline-header">
+                  <h3 class="timeline-title">{item.title}</h3>
+                  <span class="timeline-date">
+                    {item.startDate}
+                    {item.endDate ? ` — ${item.endDate}` : " — Presente"}
+                  </span>
                 </div>
-              )}
-              {item.achievements && (
-                <ul class="timeline-achievements">
-                  {item.achievements.map((a) => <li>{a}</li>)}
-                </ul>
-              )}
+                <p class="timeline-org">{item.organization}</p>
+                <p class="timeline-desc">{item.description}</p>
+                {item.stack && (
+                  <div class="timeline-stack">
+                    {item.stack.map((tech) => (
+                      <span class="tech-chip">{tech}</span>
+                    ))}
+                  </div>
+                )}
+                {item.achievements && (
+                  <ul class="timeline-achievements">
+                    {item.achievements.map((a) => (
+                      <li>{a}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </section>
 
@@ -187,24 +278,31 @@ const hobbies: Hobby[] = [
     <section class="section">
       <h2 class="section-title">{ui.about.education}</h2>
       <div class="timeline">
-        {education.map((item) => (
-          <div class="timeline-item">
-            <div class="timeline-marker"></div>
-            <div class="timeline-content">
-              <div class="timeline-header">
-                <h3 class="timeline-title">{item.title}</h3>
-                <span class="timeline-date">{item.startDate}{item.endDate ? ` — ${item.endDate}` : ' — Presente'}</span>
+        {
+          education.map((item) => (
+            <div class="timeline-item">
+              <div class="timeline-marker" />
+              <div class="timeline-content">
+                <div class="timeline-header">
+                  <h3 class="timeline-title">{item.title}</h3>
+                  <span class="timeline-date">
+                    {item.startDate}
+                    {item.endDate ? ` — ${item.endDate}` : " — Presente"}
+                  </span>
+                </div>
+                <p class="timeline-org">{item.organization}</p>
+                <p class="timeline-desc">{item.description}</p>
+                {item.achievements && (
+                  <ul class="timeline-achievements">
+                    {item.achievements.map((a) => (
+                      <li>{a}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              <p class="timeline-org">{item.organization}</p>
-              <p class="timeline-desc">{item.description}</p>
-              {item.achievements && (
-                <ul class="timeline-achievements">
-                  {item.achievements.map((a) => <li>{a}</li>)}
-                </ul>
-              )}
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </section>
 
@@ -212,21 +310,26 @@ const hobbies: Hobby[] = [
     <section class="section">
       <h2 class="section-title">{ui.about.skills}</h2>
       <div class="skills-grid">
-        {skillCategories.map((category) => (
-          <div class="skill-category">
-            <h3 class="category-name">{category.name}</h3>
-            <div class="skill-list">
-              {category.skills.map((skill) => (
-                <div class="skill-item">
-                  <span class="skill-name">{skill.name}</span>
-                  <div class="skill-bar">
-                    <div class="skill-fill" style={`width: ${(skill.level / 5) * 100}%`}></div>
+        {
+          skillCategories.map((category) => (
+            <div class="skill-category">
+              <h3 class="category-name">{category.name}</h3>
+              <div class="skill-list">
+                {category.skills.map((skill) => (
+                  <div class="skill-item">
+                    <span class="skill-name">{skill.name}</span>
+                    <div class="skill-bar">
+                      <div
+                        class="skill-fill"
+                        style={`width: ${(skill.level / 5) * 100}%`}
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </section>
 
@@ -234,20 +337,28 @@ const hobbies: Hobby[] = [
     <section class="section">
       <h2 class="section-title">{ui.about.hobbies}</h2>
       <div class="hobbies-grid">
-        {hobbies.map((hobby) => (
-          <div class="hobby-card">
-            <span class="hobby-emoji">{hobby.emoji}</span>
-            <h3 class="hobby-name">{hobby.name}</h3>
-            <p class="hobby-desc">{hobby.description}</p>
-          </div>
-        ))}
+        {
+          hobbies.map((hobby) => (
+            <div class="hobby-card">
+              <span class="hobby-emoji">{hobby.emoji}</span>
+              <h3 class="hobby-name">{hobby.name}</h3>
+              <p class="hobby-desc">{hobby.description}</p>
+            </div>
+          ))
+        }
       </div>
     </section>
 
     <!-- CV Download -->
     <section class="section cv-section">
       <a href="/cv/CV-FABRIZIO RIERA BAUER.pdf" download class="cv-button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cv-icon">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          class="cv-icon"
+        >
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
           <polyline points="7,10 12,15 17,10"></polyline>
           <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -296,6 +407,14 @@ const hobbies: Hobby[] = [
     border-radius: 50%;
     border: 2px solid var(--color-border);
     object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .intro-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
     flex-shrink: 0;
   }
 
@@ -356,7 +475,7 @@ const hobbies: Hobby[] = [
   }
 
   .timeline::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0.5rem;
     top: 0.5rem;
@@ -445,10 +564,22 @@ const hobbies: Hobby[] = [
     padding-left: 1rem;
     font-size: 0.875rem;
     color: var(--color-text-muted);
+    list-style: none;
   }
 
   .timeline-achievements li {
     margin-bottom: 0.25rem;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .timeline-achievements li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    line-height: 1.6;
   }
 
   /* Skills */
@@ -501,7 +632,11 @@ const hobbies: Hobby[] = [
 
   .skill-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
+    background: linear-gradient(
+      90deg,
+      var(--color-accent),
+      var(--color-accent-hover)
+    );
     border-radius: 3px;
     transition: width 0.5s ease;
   }
@@ -581,6 +716,10 @@ const hobbies: Hobby[] = [
       flex-direction: column-reverse;
       align-items: center;
       text-align: center;
+    }
+
+    .intro-visual {
+      width: 100%;
     }
 
     .values-grid,

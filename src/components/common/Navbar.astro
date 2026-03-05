@@ -17,7 +17,7 @@ const currentPath = Astro.url.pathname;
 <header id="navbar" class="navbar">
   <nav class="navbar-inner container-wide">
     <a href="/" class="logo" aria-label="Ir al inicio">
-      <span class="logo-fab">&lt;Fab</span><span class="logo-ri">Ri</span><span class="logo-bau">Bau/&gt;</span>
+      <span class="logo-fab"><b>&lt;</b>Fab</span><span class="logo-ri">Ri</span><span class="logo-bau">Bau/&gt;</span>
     </a>
 
     <!-- Desktop nav -->
@@ -105,6 +105,10 @@ const currentPath = Astro.url.pathname;
   .logo-fab { color: var(--color-text); }
   .logo-ri { color: var(--color-accent); }
   .logo-bau { color: var(--color-text); }
+
+  .logo:hover .logo-ri {
+    color: var(--color-text);
+  }
 
   .logo:hover .logo-fab,
   .logo:hover .logo-bau {

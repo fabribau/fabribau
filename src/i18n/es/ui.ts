@@ -4,7 +4,7 @@
 export const ui = {
     // Site
     siteName: 'FabRiBau',
-    siteDescription: 'Blog, proyectos y portafolio personal de Fabrizio Riera Bauer — Ingeniero en Informática, desarrollador fullstack y docente universitario.',
+    siteDescription: 'Blog, proyectos y portafolio personal de Fabrizio Riera Bauer — Ingeniero en Informática, desarrollador y docente universitario.',
 
     // Navigation
     nav: {
@@ -20,7 +20,7 @@ export const ui = {
     home: {
         greeting: 'Hola, soy',
         name: 'Fabrizio Riera Bauer',
-        tagline: 'Ingeniero en Informática · Desarrollador Fullstack · Docente Universitario',
+        tagline: 'Ingeniero en Informática · Desarrollador · Docente Universitario',
         description: 'Construyo software con propósito, enseño lo que aprendo y escribo sobre tecnología, IA y desarrollo web.',
         ctaProjects: 'Ver proyectos',
         ctaBlog: 'Leer el blog',
