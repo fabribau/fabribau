@@ -1,16 +1,17 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProjectCard from '../../components/projects/ProjectCard.astro';
-import { getAllProjects } from '../../lib/content';
-import { ui } from '../../i18n/es/ui';
+export const prerender = true;
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/projects/ProjectCard.astro";
+import { getAllProjects } from "../../lib/content";
+import { ui } from "../../i18n/es/ui";
 
 const projects = await getAllProjects();
 
 const statusFilters = [
-  { key: 'all', label: ui.projects.filterAll },
-  { key: 'completed', label: ui.projects.filterCompleted },
-  { key: 'in-progress', label: ui.projects.filterInProgress },
-  { key: 'archived', label: ui.projects.filterArchived },
+  { key: "all", label: ui.projects.filterAll },
+  { key: "completed", label: ui.projects.filterCompleted },
+  { key: "in-progress", label: ui.projects.filterInProgress },
+  { key: "archived", label: ui.projects.filterArchived },
 ];
 ---
 
@@ -23,31 +24,35 @@ const statusFilters = [
 
     <!-- Status filter -->
     <div class="status-filter animate-fade-up animate-delay-1">
-      {statusFilters.map((filter) => (
-        <button
-          class:list={['filter-btn', { active: filter.key === 'all' }]}
-          data-status={filter.key}
-        >
-          {filter.label}
-        </button>
-      ))}
+      {
+        statusFilters.map((filter) => (
+          <button
+            class:list={["filter-btn", { active: filter.key === "all" }]}
+            data-status={filter.key}
+          >
+            {filter.label}
+          </button>
+        ))
+      }
     </div>
 
     <!-- Projects grid -->
     <div class="projects-grid animate-fade-up animate-delay-2">
-      {projects.map((project) => (
-        <div class="project-item" data-status={project.data.status}>
-          <ProjectCard
-            title={project.data.title}
-            description={project.data.description}
-            status={project.data.status}
-            stack={project.data.stack}
-            slug={project.slug}
-            githubUrl={project.data.githubUrl}
-            demoUrl={project.data.demoUrl}
-          />
-        </div>
-      ))}
+      {
+        projects.map((project) => (
+          <div class="project-item" data-status={project.data.status}>
+            <ProjectCard
+              title={project.data.title}
+              description={project.data.description}
+              status={project.data.status}
+              stack={project.data.stack}
+              slug={project.slug}
+              githubUrl={project.data.githubUrl}
+              demoUrl={project.data.demoUrl}
+            />
+          </div>
+        ))
+      }
     </div>
   </section>
 </BaseLayout>
@@ -120,21 +125,21 @@ const statusFilters = [
 </style>
 
 <script>
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const projectItems = document.querySelectorAll('.project-item');
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  const projectItems = document.querySelectorAll(".project-item");
 
   filterBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const status = btn.getAttribute('data-status');
+    btn.addEventListener("click", () => {
+      const status = btn.getAttribute("data-status");
 
-      filterBtns.forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
+      filterBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
 
       projectItems.forEach((item) => {
-        if (status === 'all' || item.getAttribute('data-status') === status) {
-          (item as HTMLElement).style.display = '';
+        if (status === "all" || item.getAttribute("data-status") === status) {
+          (item as HTMLElement).style.display = "";
         } else {
-          (item as HTMLElement).style.display = 'none';
+          (item as HTMLElement).style.display = "none";
         }
       });
     });

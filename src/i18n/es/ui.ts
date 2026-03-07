@@ -77,7 +77,7 @@ export const ui = {
     contact: {
         title: 'Contacto',
         description: 'Hablemos. Ya sea por un proyecto, una idea o simplemente para saludar.',
-        intro: 'Si querés charlar sobre un proyecto, una colaboración o simplemente decir hola, escribime. Respondo siempre que puedo.',
+        intro: '¿Tenés un proyecto, una idea o una oportunidad de colaboración? Me encantaría escucharlo. Escribime y lo charlamos.',
         nameLabel: 'Nombre',
         emailLabel: 'Email',
         subjectLabel: 'Asunto',
@@ -86,6 +86,9 @@ export const ui = {
         sending: 'Enviando...',
         success: '¡Mensaje enviado! Te respondo pronto.',
         error: 'Hubo un error al enviar. Intentá de nuevo.',
+        requiredError: 'Completá todos los campos antes de enviar.',
+        invalidEmailError: 'Ingresá un email válido.',
+        messageMaxError: 'El mensaje no puede superar los 1000 caracteres.',
     },
 
     // Ask

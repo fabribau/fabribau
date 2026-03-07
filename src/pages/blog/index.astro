@@ -1,9 +1,10 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostCard from '../../components/blog/PostCard.astro';
-import TagBadge from '../../components/blog/TagBadge.astro';
-import { getPublishedPosts, getAllTags } from '../../lib/content';
-import { ui } from '../../i18n/es/ui';
+export const prerender = true;
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostCard from "../../components/blog/PostCard.astro";
+import TagBadge from "../../components/blog/TagBadge.astro";
+import { getPublishedPosts, getAllTags } from "../../lib/content";
+import { ui } from "../../i18n/es/ui";
 
 const posts = await getPublishedPosts();
 const tags = await getAllTags();
@@ -18,31 +19,43 @@ const tags = await getAllTags();
 
     <!-- Tag filter -->
     <div class="tag-filter animate-fade-up animate-delay-1">
-      <a href="/blog" class="filter-tag active" data-tag="all">{ui.blog.allTags}</a>
-      {tags.map((tag) => (
-        <a href={`/blog?tag=${encodeURIComponent(tag)}`} class="filter-tag" data-tag={tag}>{tag}</a>
-      ))}
+      <a href="/blog" class="filter-tag active" data-tag="all"
+        >{ui.blog.allTags}</a
+      >
+      {
+        tags.map((tag) => (
+          <a
+            href={`/blog?tag=${encodeURIComponent(tag)}`}
+            class="filter-tag"
+            data-tag={tag}
+          >
+            {tag}
+          </a>
+        ))
+      }
     </div>
 
     <!-- Posts grid -->
-    {posts.length > 0 ? (
-      <div class="posts-grid animate-fade-up animate-delay-2">
-        {posts.map((post) => (
-          <PostCard
-            title={post.data.title}
-            description={post.data.description}
-            pubDate={post.data.pubDate}
-            tags={post.data.tags}
-            slug={post.slug}
-            body={post.body || ''}
-            featured={post.data.featured}
-            coverImage={post.data.coverImage}
-          />
-        ))}
-      </div>
-    ) : (
-      <p class="no-posts">{ui.blog.noPosts}</p>
-    )}
+    {
+      posts.length > 0 ? (
+        <div class="posts-grid animate-fade-up animate-delay-2">
+          {posts.map((post) => (
+            <PostCard
+              title={post.data.title}
+              description={post.data.description}
+              pubDate={post.data.pubDate}
+              tags={post.data.tags}
+              slug={post.slug}
+              body={post.body || ""}
+              featured={post.data.featured}
+              coverImage={post.data.coverImage}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="no-posts">{ui.blog.noPosts}</p>
+      )
+    }
   </section>
 </BaseLayout>
 
@@ -118,49 +131,51 @@ const tags = await getAllTags();
 
 <script>
   // Client-side tag filtering
-  const filterTags = document.querySelectorAll('.filter-tag');
-  const postCards = document.querySelectorAll('.post-card');
-  
+  const filterTags = document.querySelectorAll(".filter-tag");
+  const postCards = document.querySelectorAll(".post-card");
+
   // Check URL for tag parameter
   const urlParams = new URLSearchParams(window.location.search);
-  const activeTag = urlParams.get('tag');
-  
+  const activeTag = urlParams.get("tag");
+
   if (activeTag) {
-    filterTags.forEach(tag => {
-      tag.classList.remove('active');
-      if (tag.getAttribute('data-tag') === activeTag) {
-        tag.classList.add('active');
+    filterTags.forEach((tag) => {
+      tag.classList.remove("active");
+      if (tag.getAttribute("data-tag") === activeTag) {
+        tag.classList.add("active");
       }
     });
   }
 
-  filterTags.forEach(tag => {
-    tag.addEventListener('click', (e) => {
+  filterTags.forEach((tag) => {
+    tag.addEventListener("click", (e) => {
       e.preventDefault();
-      const selectedTag = tag.getAttribute('data-tag');
-      
-      filterTags.forEach(t => t.classList.remove('active'));
-      tag.classList.add('active');
+      const selectedTag = tag.getAttribute("data-tag");
 
-      postCards.forEach(card => {
-        if (selectedTag === 'all') {
-          (card as HTMLElement).style.display = '';
+      filterTags.forEach((t) => t.classList.remove("active"));
+      tag.classList.add("active");
+
+      postCards.forEach((card) => {
+        if (selectedTag === "all") {
+          (card as HTMLElement).style.display = "";
         } else {
           // Check if card contains the tag
-          const cardTags = card.querySelectorAll('.tag-badge');
-          const hasTag = Array.from(cardTags).some(t => t.textContent?.trim() === selectedTag);
-          (card as HTMLElement).style.display = hasTag ? '' : 'none';
+          const cardTags = card.querySelectorAll(".tag-badge");
+          const hasTag = Array.from(cardTags).some(
+            (t) => t.textContent?.trim() === selectedTag,
+          );
+          (card as HTMLElement).style.display = hasTag ? "" : "none";
         }
       });
 
       // Update URL without reload
       const url = new URL(window.location.href);
-      if (selectedTag === 'all') {
-        url.searchParams.delete('tag');
+      if (selectedTag === "all") {
+        url.searchParams.delete("tag");
       } else {
-        url.searchParams.set('tag', selectedTag!);
+        url.searchParams.set("tag", selectedTag!);
       }
-      window.history.replaceState({}, '', url);
+      window.history.replaceState({}, "", url);
     });
   });
 </script>

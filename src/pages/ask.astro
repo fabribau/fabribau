@@ -1,6 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { ui } from '../i18n/es/ui';
+export const prerender = true;
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { ui } from "../i18n/es/ui";
 ---
 
 <BaseLayout title={ui.ask.title} description={ui.ask.description}>
@@ -30,7 +31,11 @@ import { ui } from '../i18n/es/ui';
           <div class="welcome-avatar">
             <span>FR</span>
           </div>
-          <p>¡Hola! Soy una IA entrenada con información sobre Fabrizio. Preguntame lo que quieras sobre su experiencia, proyectos, habilidades o intereses.</p>
+          <p>
+            ¡Hola! Soy una IA entrenada con información sobre Fabrizio.
+            Preguntame lo que quieras sobre su experiencia, proyectos,
+            habilidades o intereses.
+          </p>
         </div>
       </div>
 
@@ -46,7 +51,13 @@ import { ui } from '../i18n/es/ui';
           class="ask-input"
         />
         <button type="submit" id="ask-btn" class="ask-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="send-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            class="send-icon"
+          >
             <line x1="22" y1="2" x2="11" y2="13"></line>
             <polygon points="22,2 15,22 11,13 2,9"></polygon>
           </svg>
@@ -262,15 +273,21 @@ import { ui } from '../i18n/es/ui';
 </style>
 
 <script>
-  const form = document.getElementById('ask-form') as HTMLFormElement;
-  const input = document.getElementById('ask-input') as HTMLInputElement;
-  const btn = document.getElementById('ask-btn') as HTMLButtonElement;
-  const chatArea = document.getElementById('chat-area') as HTMLDivElement;
-  const counterText = document.getElementById('counter-text') as HTMLSpanElement;
-  const exhaustedMsg = document.getElementById('exhausted-msg') as HTMLParagraphElement;
-  const dots = document.querySelectorAll('.dot');
+  const form = document.getElementById("ask-form") as HTMLFormElement;
+  const input = document.getElementById("ask-input") as HTMLInputElement;
+  const btn = document.getElementById("ask-btn") as HTMLButtonElement;
+  const chatArea = document.getElementById("chat-area") as HTMLDivElement;
+  const counterText = document.getElementById(
+    "counter-text",
+  ) as HTMLSpanElement;
+  const exhaustedMsg = document.getElementById(
+    "exhausted-msg",
+  ) as HTMLParagraphElement;
+  const dots = document.querySelectorAll(".dot");
 
-  let questionsUsed = parseInt(sessionStorage.getItem('askQuestionsUsed') || '0');
+  let questionsUsed = parseInt(
+    sessionStorage.getItem("askQuestionsUsed") || "0",
+  );
   const MAX_QUESTIONS = 5;
   const history: { role: string; content: string }[] = [];
 
@@ -280,20 +297,23 @@ import { ui } from '../i18n/es/ui';
 
     dots.forEach((dot, i) => {
       if (i < remaining) {
-        dot.classList.add('active');
+        dot.classList.add("active");
       } else {
-        dot.classList.remove('active');
+        dot.classList.remove("active");
       }
     });
 
     if (remaining <= 0) {
-      form.style.display = 'none';
-      exhaustedMsg.style.display = 'block';
+      form.style.display = "none";
+      exhaustedMsg.style.display = "block";
     }
   }
 
-  function addMessage(content: string, role: 'user' | 'assistant' | 'thinking') {
-    const msg = document.createElement('div');
+  function addMessage(
+    content: string,
+    role: "user" | "assistant" | "thinking",
+  ) {
+    const msg = document.createElement("div");
     msg.className = `chat-message ${role}`;
     msg.textContent = content;
     chatArea.appendChild(msg);
@@ -303,43 +323,44 @@ import { ui } from '../i18n/es/ui';
 
   updateCounter();
 
-  form?.addEventListener('submit', async (e) => {
+  form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const question = input.value.trim();
     if (!question || questionsUsed >= MAX_QUESTIONS) return;
 
     // Add user message
-    addMessage(question, 'user');
-    input.value = '';
+    addMessage(question, "user");
+    input.value = "";
     btn.disabled = true;
 
     // Increment counter
     questionsUsed++;
-    sessionStorage.setItem('askQuestionsUsed', String(questionsUsed));
+    sessionStorage.setItem("askQuestionsUsed", String(questionsUsed));
     updateCounter();
 
     // Add thinking indicator
-    const thinkingMsg = addMessage('Pensando...', 'thinking');
+    const thinkingMsg = addMessage("Pensando...", "thinking");
 
     // Add to history
-    history.push({ role: 'user', content: question });
+    history.push({ role: "user", content: question });
 
     try {
-      const res = await fetch('/api/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question, history }),
       });
 
       const data = await res.json();
       thinkingMsg.remove();
 
-      const answer = data.answer || 'No pude generar una respuesta. Intentá de nuevo.';
-      addMessage(answer, 'assistant');
-      history.push({ role: 'assistant', content: answer });
+      const answer =
+        data.answer || "No pude generar una respuesta. Intentá de nuevo.";
+      addMessage(answer, "assistant");
+      history.push({ role: "assistant", content: answer });
     } catch {
       thinkingMsg.remove();
-      addMessage('Hubo un error. Intentá de nuevo.', 'assistant');
+      addMessage("Hubo un error. Intentá de nuevo.", "assistant");
     } finally {
       btn.disabled = false;
       input.focus();

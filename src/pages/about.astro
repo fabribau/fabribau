@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
 import fabriCvImage from "../assets/images/Fabri-cv.png";
@@ -126,10 +127,10 @@ const skillCategories: SkillCategory[] = [
 
 const hobbies: Hobby[] = [
   {
-    name: "Fútbol",
+    name: "Fútbol y atletismo",
     description:
-      "Fanático de River Plate, disfruto jugando y viendo partidos con amigos",
-    emoji: "⚽",
+      "Fanático de River Plate, disfruto jugando y viendo partidos con amigos. Fan del atletismo y ex atleta ",
+    emoji: "⚽ 🏃‍♂️",
   },
   {
     name: "Desarrollo de Software",
@@ -149,7 +150,8 @@ const hobbies: Hobby[] = [
   },
   {
     name: "Vino",
-    description: "Me gusta descubrir nuevos vinos y aprender sobre sus características",
+    description:
+      "Me gusta descubrir nuevos vinos y aprender sobre sus características",
     emoji: "🍷",
   },
   {
@@ -193,7 +195,13 @@ const hobbies: Hobby[] = [
             loading="eager"
           />
           <a href="/cv/CV-FABRIZIO RIERA BAUER.pdf" download class="cv-button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cv-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              class="cv-icon"
+            >
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
               <polyline points="7,10 12,15 17,10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>

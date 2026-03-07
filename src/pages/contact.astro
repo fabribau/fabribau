@@ -1,6 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { ui } from '../i18n/es/ui';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { ui } from "../i18n/es/ui";
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
 <BaseLayout title={ui.contact.title} description={ui.contact.description}>
@@ -12,43 +14,125 @@ import { ui } from '../i18n/es/ui';
 
     <div class="contact-grid animate-fade-up animate-delay-1">
       <!-- Contact Form -->
-      <form id="contact-form" class="contact-form">
+      <form
+        id="contact-form"
+        class="contact-form"
+        data-send-text={ui.contact.send}
+        data-sending-text={ui.contact.sending}
+        data-success-text={ui.contact.success}
+        data-error-text={ui.contact.error}
+        data-required-error-text={ui.contact.requiredError}
+        data-invalid-email-error-text={ui.contact.invalidEmailError}
+        data-message-max-error-text={ui.contact.messageMaxError}
+      >
         <div class="form-group">
           <label for="name" class="form-label">{ui.contact.nameLabel}</label>
-          <input type="text" id="name" name="name" required class="form-input" />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            maxlength="120"
+            class="form-input"
+          />
         </div>
         <div class="form-group">
           <label for="email" class="form-label">{ui.contact.emailLabel}</label>
-          <input type="email" id="email" name="email" required class="form-input" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            maxlength="320"
+            class="form-input"
+          />
         </div>
         <div class="form-group">
-          <label for="subject" class="form-label">{ui.contact.subjectLabel}</label>
-          <input type="text" id="subject" name="subject" required class="form-input" />
+          <label for="subject" class="form-label"
+            >{ui.contact.subjectLabel}</label
+          >
+          <input
+            type="text"
+            id="subject"
+            name="subject"
+            required
+            maxlength="150"
+            class="form-input"
+          />
         </div>
         <div class="form-group">
-          <label for="message" class="form-label">{ui.contact.messageLabel}</label>
-          <textarea id="message" name="message" rows="5" required class="form-textarea"></textarea>
+          <label for="message" class="form-label"
+            >{ui.contact.messageLabel}</label
+          >
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            maxlength="1000"
+            class="form-textarea"
+            aria-describedby="char-counter"></textarea>
+          <p id="char-counter" class="char-counter" aria-live="polite">
+            0/1000
+          </p>
         </div>
-        <button type="submit" id="submit-btn" class="submit-btn">{ui.contact.send}</button>
-        <p id="form-status" class="form-status"></p>
+
+        <!-- Honeypot: invisible for humans, bots fill it in -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="website">Website</label>
+          <input
+            type="text"
+            id="website"
+            name="website"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+
+        <!-- Cloudflare Turnstile widget -->
+        <div
+          class="cf-turnstile"
+          data-sitekey={turnstileSiteKey}
+          data-theme="auto"
+        >
+        </div>
+
+        <button type="submit" id="submit-btn" class="submit-btn"
+          >{ui.contact.send}</button
+        >
+        <p id="form-status" class="form-status" aria-live="polite"></p>
       </form>
 
       <!-- Social Links -->
       <aside class="contact-aside">
         <h2 class="aside-title">También me encontrás en</h2>
         <div class="social-links">
-          <a href="https://github.com/fabribau" target="_blank" rel="noopener noreferrer" class="social-link">
+          <a
+            href="https://github.com/fabribau"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+          >
             <svg viewBox="0 0 24 24" fill="currentColor" class="social-icon">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+              ></path>
             </svg>
             <div>
               <span class="social-name">GitHub</span>
               <span class="social-handle">@fabribau</span>
             </div>
           </a>
-          <a href="https://linkedin.com/in/fabrizio-bauer" target="_blank" rel="noopener noreferrer" class="social-link">
+          <a
+            href="https://linkedin.com/in/fabrizio-bauer"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+          >
             <svg viewBox="0 0 24 24" fill="currentColor" class="social-icon">
-              <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+              <path
+                d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"
+              ></path>
             </svg>
             <div>
               <span class="social-name">LinkedIn</span>
@@ -56,7 +140,13 @@ import { ui } from '../i18n/es/ui';
             </div>
           </a>
           <a href="mailto:fabriziojriera@gmail.com" class="social-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="social-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              class="social-icon"
+            >
               <rect x="2" y="4" width="20" height="16" rx="2"></rect>
               <path d="m22,7-8.97,5.7a1.94,1.94,0,0,1-2.06,0L2,7"></path>
             </svg>
@@ -70,6 +160,10 @@ import { ui } from '../i18n/es/ui';
     </div>
   </section>
 </BaseLayout>
+
+<!-- Cloudflare Turnstile script (loaded async, non-blocking) -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer
+></script>
 
 <style>
   .contact-page {
@@ -141,6 +235,17 @@ import { ui } from '../i18n/es/ui';
     min-height: 120px;
   }
 
+  /* Honeypot - visually hidden but not display:none so bots detect it as real */
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .submit-btn {
     padding: 0.75rem 1.5rem;
     background: var(--color-accent);
@@ -168,6 +273,17 @@ import { ui } from '../i18n/es/ui';
   .form-status {
     font-size: 0.875rem;
     margin: 0;
+  }
+
+  .char-counter {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    text-align: right;
+  }
+
+  .char-counter.limit {
+    color: #f59e0b;
   }
 
   .form-status.success {
@@ -236,39 +352,80 @@ import { ui } from '../i18n/es/ui';
 </style>
 
 <script>
-  const form = document.getElementById('contact-form') as HTMLFormElement;
-  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
-  const statusMsg = document.getElementById('form-status') as HTMLParagraphElement;
+  import { actions, isInputError } from "astro:actions";
 
-  form?.addEventListener('submit', async (e) => {
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+  const statusMsg = document.getElementById(
+    "form-status",
+  ) as HTMLParagraphElement;
+  const messageField = document.getElementById(
+    "message",
+  ) as HTMLTextAreaElement;
+  const charCounter = document.getElementById(
+    "char-counter",
+  ) as HTMLParagraphElement;
+  const MAX_MESSAGE_LENGTH = 1000;
+
+  const sendText = form?.dataset.sendText ?? "Enviar mensaje";
+  const sendingText = form?.dataset.sendingText ?? "Enviando...";
+  const successText =
+    form?.dataset.successText ?? "¡Mensaje enviado! Te respondo pronto.";
+  const errorText =
+    form?.dataset.errorText ?? "Hubo un error al enviar. Intentá de nuevo.";
+
+  const setStatus = (message: string, type: "success" | "error") => {
+    statusMsg.textContent = message;
+    statusMsg.className = "form-status";
+    statusMsg.classList.add(type);
+  };
+
+  const updateCharCounter = () => {
+    const length = messageField?.value.length ?? 0;
+    charCounter.textContent = `${length}/${MAX_MESSAGE_LENGTH}`;
+    charCounter.classList.toggle("limit", length >= MAX_MESSAGE_LENGTH);
+  };
+
+  updateCharCounter();
+  messageField?.addEventListener("input", updateCharCounter);
+
+  form?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Enviando...';
-    statusMsg.textContent = '';
-    statusMsg.className = 'form-status';
 
-    const data = Object.fromEntries(new FormData(form));
+    submitBtn.disabled = true;
+    submitBtn.textContent = sendingText;
+    statusMsg.textContent = "";
+    statusMsg.className = "form-status";
+
+    const formData = new FormData(form);
+
+    // The Turnstile widget injects a hidden input[name="cf-turnstile-response"] automatically
+    // FormData already captures it since it's inside the <form>
 
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+      const { data, error } = await actions.contact(formData);
 
-      if (res.ok) {
-        statusMsg.textContent = '¡Mensaje enviado! Te respondo pronto.';
-        statusMsg.classList.add('success');
-        form.reset();
+      if (error) {
+        if (isInputError(error)) {
+          const firstErrorMsg = Object.values(error.fields)[0]?.[0];
+          setStatus(firstErrorMsg ?? errorText, "error");
+        } else {
+          setStatus(error.message || errorText, "error");
+        }
       } else {
-        throw new Error('Error');
+        setStatus(successText, "success");
+        form.reset();
+        updateCharCounter();
+        // Reset Turnstile widget for a new submission
+        if (typeof (window as any).turnstile !== "undefined") {
+          (window as any).turnstile.reset();
+        }
       }
     } catch {
-      statusMsg.textContent = 'Hubo un error al enviar. Intentá de nuevo.';
-      statusMsg.classList.add('error');
+      setStatus(errorText, "error");
     } finally {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Enviar mensaje';
+      submitBtn.textContent = sendText;
     }
   });
 </script>
