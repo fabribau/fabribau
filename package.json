@@ -1,11 +1,13 @@
 {
   "name": "fabribau.tech",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "wrangler types && astro dev",
+    "build": "wrangler types && astro build",
     "preview": "astro preview",
+    "preview:cf": "wrangler dev",
+    "deploy": "pnpm build && wrangler deploy",
     "astro": "astro"
   },
   "dependencies": {
@@ -21,6 +23,7 @@
     "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.71.0"
   }
 }

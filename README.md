@@ -109,3 +109,60 @@ El sitio incluye un blog técnico, portafolio de proyectos, sección sobre mí y
 *Si llegaste hasta acá, gracias por leer. Siempre abierto a conversar sobre código, proyectos o ideas.*
 
 </div>
+
+---
+
+## Deploy en Cloudflare Workers: variables de entorno
+
+Este proyecto usa `@astrojs/cloudflare` y `astro:env` con este criterio:
+
+- Variables publicas de cliente: `PUBLIC_*`
+- Variables privadas de servidor: el resto (`GOOGLE_API_KEY`, `RESEND_API_KEY`, etc.)
+
+### 1) Instalar dependencias y generar tipos
+
+```bash
+pnpm install
+```
+
+Los scripts ya ejecutan `wrangler types` automaticamente:
+
+- `pnpm dev`
+- `pnpm build`
+- `pnpm preview:cf`
+
+### 2) Configurar variable publica en `wrangler.jsonc`
+
+La variable publica `PUBLIC_TURNSTILE_SITE_KEY` se define en:
+
+- `wrangler.jsonc` -> `vars`
+
+### 3) Cargar secretos en Cloudflare (produccion)
+
+No pongas secretos en `wrangler.jsonc`. Cargalos con Wrangler CLI:
+
+```bash
+pnpm wrangler secret put GOOGLE_API_KEY
+pnpm wrangler secret put RESEND_API_KEY
+pnpm wrangler secret put RESEND_FROM_EMAIL
+pnpm wrangler secret put CONTACT_EMAIL
+pnpm wrangler secret put TURNSTILE_SECRET_KEY
+```
+
+### 4) Desarrollo local con runtime de Cloudflare
+
+Para probar bindings/secrets locales de Wrangler:
+
+1. Copia `.dev.vars.example` a `.dev.vars`
+2. Completa valores reales
+3. Ejecuta:
+
+```bash
+pnpm preview:cf
+```
+
+### 5) Deploy
+
+```bash
+pnpm deploy
+```

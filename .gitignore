@@ -26,4 +26,9 @@ pnpm-debug.log*
 
 
 .wrangler
-.vercel
+
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+worker-configuration.d.ts

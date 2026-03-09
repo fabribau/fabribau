@@ -9,7 +9,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     site: 'https://fabribau.tech',
     output: 'server',
-    adapter: cloudflare(),
+    adapter: cloudflare({imageService: "compile"}),
     integrations: [
         mdx(),
         sitemap(),
