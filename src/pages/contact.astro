@@ -3,6 +3,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { ui } from "../i18n/es/ui";
 
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const runtimeTurnstileSiteKey = Astro.locals.runtime?.env?.PUBLIC_TURNSTILE_SITE_KEY;
+const resolvedTurnstileSiteKey = runtimeTurnstileSiteKey ?? turnstileSiteKey;
 ---
 
 <BaseLayout title={ui.contact.title} description={ui.contact.description}>
@@ -92,7 +94,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         <!-- Cloudflare Turnstile widget -->
         <div
           class="cf-turnstile"
-          data-sitekey={turnstileSiteKey}
+          data-sitekey={resolvedTurnstileSiteKey}
           data-theme="auto"
         >
         </div>
