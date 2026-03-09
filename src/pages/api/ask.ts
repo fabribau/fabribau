@@ -1,32 +1,38 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute } from "astro";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { streamText } from "ai";
 
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
-    const body = await request.json();
-    const { question, history } = body;
+  const body = await request.json() as { question?: unknown; history?: unknown };
+  const { question, history } = body;
 
-    if (!question) {
-        return new Response(JSON.stringify({ error: 'question is required' }), {
-            status: 400,
-            headers: { 'Content-Type': 'application/json' },
-        });
-    }
-
-    // TODO: Connect to Vercel AI SDK
-    // const OPENAI_API_KEY = import.meta.env.OPENAI_API_KEY;
-    // const systemPrompt = `Eres un asistente que conoce a Fabrizio Riera Bauer...`;
-    // const result = await streamText({
-    //   model: openai('gpt-4o-mini'),
-    //   system: systemPrompt,
-    //   messages: [...history, { role: 'user', content: question }],
-    // });
-
-    // Placeholder response
-    const answer = `Gracias por tu pregunta sobre "${question}". Esta es una respuesta placeholder. Para habilitar respuestas reales, configurá las variables de entorno OPENAI_API_KEY o ANTHROPIC_API_KEY en tu deploy de Vercel.`;
-
-    return new Response(JSON.stringify({ answer }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
+  if (!question || typeof question !== "string" || question.trim().length === 0) {
+    return new Response(JSON.stringify({ error: "question is required" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
     });
+  }
+
+  if (question.length > 250) {
+    return new Response(JSON.stringify({ error: "question too long" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  const systemPrompt = `Eres un asistente que conoce a Fabrizio Riera Bauer...`;
+
+  const google = createGoogleGenerativeAI({
+    apiKey: import.meta.env.GOOGLE_API_KEY,
+  });
+
+  const result = streamText({
+    model: google("gemini-2.5-flash"),
+    system: systemPrompt,
+    messages: [...(Array.isArray(history) ? history : []), { role: "user", content: question }],
+  });
+
+  return result.toTextStreamResponse();
 };

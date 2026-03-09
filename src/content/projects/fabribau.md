@@ -2,9 +2,9 @@
 title: "FabRiBau"
 description: "Sitio web personal construido con Astro, Tailwind v4 y TypeScript. Blog, portafolio y punto de contacto."
 status: "in-progress"
-stack: ["Astro", "TypeScript", "Tailwind CSS", "Vercel", "Neon", "MDX"]
+stack: ["Astro", "TypeScript", "Tailwind CSS", "Cloudflare", "Neon", "MDX"]
 githubUrl: "https://github.com/fabribau/fabribau"
-startDate: 2025-01-01
+startDate: 2026-03-02
 featured: true
 ---
 
