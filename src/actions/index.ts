@@ -7,6 +7,7 @@ import {
 } from 'astro:env/server';
 import { z } from 'astro:schema';
 import { Resend } from 'resend';
+import { checkRateLimit } from '../lib/rateLimit';
 
 export const server = {
   // ── Likes ─────────────────────────────────────────────────────────────────
@@ -17,6 +18,27 @@ export const server = {
     handler: async (input, context) => {
       const db = (context.locals as App.Locals).runtime.env.blog_metrics;
 
+      // ── Rate limiting: 3 likes por IP por minuto ─────────────────────────
+      const ip =
+        context.request.headers.get('CF-Connecting-IP') ??
+        context.request.headers.get('X-Forwarded-For')?.split(',')[0].trim() ??
+        'unknown';
+
+      const { allowed } = await checkRateLimit({
+        db,
+        key: `likes_${ip}`,
+        limit: 3,
+        windowMs: 60_000, // 1 minuto
+      });
+
+      if (!allowed) {
+        throw new ActionError({
+          code: 'TOO_MANY_REQUESTS',
+          message: 'Demasiados intentos. Esperá un momento.',
+        });
+      }
+
+      // ── Upsert de likes ──────────────────────────────────────────────────
       await db
         .prepare(
           `INSERT INTO metrics (slug, likes, views)
