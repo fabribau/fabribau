@@ -1,6 +1,5 @@
 import type { APIRoute } from "astro";
-import { GOOGLE_API_KEY } from "astro:env/server";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { google } from "@ai-sdk/google";
 import { streamText } from "ai";
 
 export const prerender = false;
@@ -24,10 +23,6 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const systemPrompt = `Eres un asistente que conoce a Fabrizio Riera Bauer...`;
-
-  const google = createGoogleGenerativeAI({
-    apiKey: GOOGLE_API_KEY,
-  });
 
   const result = streamText({
     model: google("gemini-2.5-flash"),

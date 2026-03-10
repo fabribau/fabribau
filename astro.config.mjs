@@ -19,7 +19,7 @@ export default defineConfig({
     },
     env: {
         schema: {
-            GOOGLE_API_KEY: envField.string({ context: 'server', access: 'secret' }),
+            GOOGLE_GENERATIVE_AI_API_KEY: envField.string({ context: 'server', access: 'secret' }),
             RESEND_API_KEY: envField.string({ context: 'server', access: 'secret' }),
             RESEND_FROM_EMAIL: envField.string({ context: 'server', access: 'secret' }),
             CONTACT_EMAIL: envField.string({ context: 'server', access: 'secret' }),
