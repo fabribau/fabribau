@@ -1,9 +1,9 @@
 ---
-import BaseLayout from './BaseLayout.astro';
-import TagBadge from '../components/blog/TagBadge.astro';
-import ShareButtons from '../components/blog/ShareButtons.astro';
-import { formatDate, getReadingTime } from '../lib/content';
-import { ui } from '../i18n/es/ui';
+import BaseLayout from "./BaseLayout.astro";
+import TagBadge from "../components/blog/TagBadge.astro";
+import ShareButtons from "../components/blog/ShareButtons.astro";
+import { formatDate, getReadingTime } from "../lib/content";
+import { ui } from "../i18n/es/ui";
 
 interface Props {
   title: string;
@@ -15,7 +15,8 @@ interface Props {
   slug: string;
 }
 
-const { title, description, pubDate, updatedDate, tags, content, slug } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, content, slug } =
+  Astro.props;
 const readingTime = getReadingTime(content);
 const url = Astro.url.href;
 ---
@@ -35,28 +36,48 @@ const url = Astro.url.href;
         <span>{readingTime} {ui.blog.readingTime}</span>
       </div>
       <h1 class="post-title">{title}</h1>
-      {updatedDate && (
-        <p class="post-updated">
-          Actualizado: <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time>
-        </p>
-      )}
+      {
+        updatedDate && (
+          <p class="post-updated">
+            Actualizado:{" "}
+            <time datetime={updatedDate.toISOString()}>
+              {formatDate(updatedDate)}
+            </time>
+          </p>
+        )
+      }
       <div class="post-tags">
         {tags.map((tag) => <TagBadge tag={tag} />)}
       </div>
     </header>
 
-    <div class="prose prose-lg max-w-none prose-headings:font-display prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-pre:rounded-lg prose-img:rounded-lg animate-fade-up animate-delay-1">
+    <div
+      class="prose prose-lg max-w-none prose-headings:font-display prose-a:font-medium prose-a:underline prose-a:underline-offset-2 prose-pre:rounded-lg prose-img:rounded-lg animate-fade-up animate-delay-1"
+    >
       <slot />
     </div>
 
     <footer class="post-footer animate-fade-up animate-delay-2">
       <!-- Like button -->
       <div class="like-section">
-        <button id="like-btn" class="like-btn" data-slug={slug} aria-label="Dar like">
-          <svg class="like-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        <p class="like-prompt">{ui.blog.likePrompt}</p>
+        <button
+          id="like-btn"
+          class="like-btn"
+          data-slug={slug}
+          aria-label="Dar like"
+        >
+          <svg
+            class="like-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+            ></path>
           </svg>
-          <span id="like-count">0</span>
         </button>
       </div>
 
@@ -132,8 +153,16 @@ const url = Astro.url.href;
 
   .like-section {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
     margin-bottom: 2rem;
+  }
+
+  .like-prompt {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    margin: 0;
   }
 
   .like-btn {
@@ -170,6 +199,60 @@ const url = Astro.url.href;
   .like-icon {
     width: 1.125rem;
     height: 1.125rem;
+    transition: fill 200ms ease;
+  }
+
+  .like-btn.popping .like-icon {
+    animation: heartPop 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  }
+
+  .like-btn.shaking {
+    animation: likeShake 0.4s ease;
+  }
+
+  @keyframes heartPop {
+    0% {
+      transform: scale(1);
+    }
+    35% {
+      transform: scale(1.75);
+    }
+    65% {
+      transform: scale(0.85);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes floatHeart {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-65px) scale(0.2);
+    }
+  }
+
+  @keyframes likeShake {
+    0%,
+    100% {
+      transform: translateX(0) rotate(0deg);
+    }
+    20% {
+      transform: translateX(-5px) rotate(-4deg);
+    }
+    40% {
+      transform: translateX(5px) rotate(4deg);
+    }
+    60% {
+      transform: translateX(-4px) rotate(-2deg);
+    }
+    80% {
+      transform: translateX(4px) rotate(2deg);
+    }
   }
 
   .newsletter-section {
@@ -241,58 +324,106 @@ const url = Astro.url.href;
 </style>
 
 <script>
-  // Like button logic
-  const likeBtn = document.getElementById('like-btn') as HTMLButtonElement;
-  const likeCount = document.getElementById('like-count');
-  const slug = likeBtn?.dataset.slug;
+  import { actions } from "astro:actions";
 
-  if (likeBtn && likeCount && slug) {
-    // Check if already liked
-    const likedSlugs = JSON.parse(localStorage.getItem('likedSlugs') || '[]');
-    if (likedSlugs.includes(slug)) {
-      likeBtn.classList.add('liked');
-    }
+  // ── Views: localStorage cooldown (1 hora por post) ─────────────────────────
+  const likeBtn = document.getElementById(
+    "like-btn",
+  ) as HTMLButtonElement | null;
+  const slug = likeBtn?.dataset.slug ?? "";
 
-    likeBtn.addEventListener('click', async () => {
-      if (likedSlugs.includes(slug)) return;
+  if (slug) {
+    const viewKey = `view_${slug}`;
+    const lastView = localStorage.getItem(viewKey);
+    const now = Date.now();
+    const ONE_HOUR = 60 * 60 * 1000;
 
-      try {
-        const res = await fetch('/api/likes', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ slug }),
+    if (!lastView || now - Number(lastView) > ONE_HOUR) {
+      fetch(`/api/views/${encodeURIComponent(slug)}`, { method: "POST" })
+        .then((r) => {
+          if (r.ok) localStorage.setItem(viewKey, String(now));
+        })
+        .catch(() => {
+          /* silently fail */
         });
-        const data = await res.json();
-        likeCount.textContent = String(data.count);
-        likeBtn.classList.add('liked');
-        likedSlugs.push(slug);
-        localStorage.setItem('likedSlugs', JSON.stringify(likedSlugs));
-      } catch (e) {
-        // Silently fail — offline or API not ready
-      }
-    });
-
-    // Load initial count
-    fetch(`/api/likes?slug=${slug}`)
-      .then(res => res.json())
-      .then(data => { likeCount.textContent = String(data.count); })
-      .catch(() => {}); // Silently fail
+    }
   }
 
-  // Newsletter form
-  const form = document.getElementById('newsletter-form') as HTMLFormElement;
-  form?.addEventListener('submit', async (e) => {
+  // ── Likes: localStorage persistido + Astro Action ───────────────────────────
+  if (likeBtn && slug) {
+    const likedKey = `liked_${slug}`;
+
+    // Estado inicial
+    if (localStorage.getItem(likedKey) === "true") {
+      likeBtn.classList.add("liked");
+      likeBtn.disabled = true;
+    }
+
+    function spawnFloatingHearts(btn: HTMLButtonElement) {
+      const rect = btn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      for (let i = 0; i < 7; i++) {
+        const heart = document.createElement("span");
+        heart.textContent = "❤";
+        const xOff = (Math.random() - 0.5) * 90;
+        const size = 0.6 + Math.random() * 0.55;
+        const delay = i * 0.07;
+        heart.style.cssText = `position:fixed;left:${cx + xOff}px;top:${cy}px;font-size:${size}rem;color:var(--color-accent);pointer-events:none;z-index:9999;animation:floatHeart 0.85s ease-out ${delay}s forwards;`;
+        document.body.appendChild(heart);
+        heart.addEventListener("animationend", () => heart.remove());
+      }
+    }
+
+    likeBtn.addEventListener("click", async () => {
+      if (likeBtn.disabled) return;
+
+      // Feedback inmediato: actualización optimista
+      likeBtn.disabled = true;
+      likeBtn.classList.add("liked", "popping");
+      spawnFloatingHearts(likeBtn);
+      likeBtn.addEventListener(
+        "animationend",
+        () => likeBtn.classList.remove("popping"),
+        { once: true },
+      );
+
+      const { error } = await actions.incrementLike({ slug });
+
+      if (!error) {
+        localStorage.setItem(likedKey, "true");
+      } else {
+        // Revertir estado si hubo error
+        likeBtn.classList.remove("liked", "popping");
+        likeBtn.classList.add("shaking");
+        likeBtn.disabled = false;
+        likeBtn.addEventListener(
+          "animationend",
+          () => likeBtn.classList.remove("shaking"),
+          { once: true },
+        );
+        console.error("[likes] Error al registrar like:", error.message);
+      }
+    });
+  }
+
+  // ── Newsletter form ─────────────────────────────────────────────────────────
+  const form = document.getElementById(
+    "newsletter-form",
+  ) as HTMLFormElement | null;
+  form?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = new FormData(form).get('email') as string;
+    const email = new FormData(form).get("email") as string;
     try {
-      await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      form.innerHTML = '<p style="color: var(--color-accent);">¡Gracias por suscribirte! 🎉</p>';
-    } catch (e) {
-      // Silently fail
+      form.innerHTML =
+        '<p style="color: var(--color-accent);">¡Gracias por suscribirte! 🎉</p>';
+    } catch {
+      // silently fail
     }
   });
 </script>

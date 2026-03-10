@@ -1,7 +1,7 @@
 {
   "name": "fabribau.tech",
   "type": "module",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "scripts": {
     "dev": "wrangler types && astro dev",
     "build": "wrangler types && astro build",

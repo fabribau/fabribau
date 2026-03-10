@@ -9,6 +9,28 @@ import { z } from 'astro:schema';
 import { Resend } from 'resend';
 
 export const server = {
+  // ── Likes ─────────────────────────────────────────────────────────────────
+  incrementLike: defineAction({
+    input: z.object({
+      slug: z.string().min(1, 'El slug no puede estar vacío'),
+    }),
+    handler: async (input, context) => {
+      const db = (context.locals as App.Locals).runtime.env.blog_metrics;
+
+      await db
+        .prepare(
+          `INSERT INTO metrics (slug, likes, views)
+           VALUES (?1, 1, 0)
+           ON CONFLICT(slug) DO UPDATE SET likes = likes + 1`
+        )
+        .bind(input.slug)
+        .run();
+
+      return { success: true };
+    },
+  }),
+
+  // ── Contact form ───────────────────────────────────────────────────────────
   contact: defineAction({
     accept: 'form',
     input: z.object({

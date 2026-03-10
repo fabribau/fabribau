@@ -1,19 +1,26 @@
 {
-  "main": "dist/_worker.js/index.js",
-  "name": "fabribau",
-  "compatibility_date": "2026-03-07",
-  "compatibility_flags": [
-    "nodejs_compat",
-    "global_fetch_strictly_public"
-  ],
-  "vars": {
-    "PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAACnxwrlsduLpo2JD"
-  },
-  "assets": {
-    "binding": "ASSETS",
-    "directory": "./dist"
-  },
-  "observability": {
-    "enabled": true
-  }
+	"main": "dist/_worker.js/index.js",
+	"name": "fabribau",
+	"compatibility_date": "2026-03-07",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	"vars": {
+		"PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAACnxwrlsduLpo2JD"
+	},
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "./dist"
+	},
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
+		{
+			"binding": "blog_metrics",
+			"database_name": "blog-metrics",
+			"database_id": "05efb5b3-5dd7-48eb-8491-06a88b6b6335"
+		}
+	]
 }

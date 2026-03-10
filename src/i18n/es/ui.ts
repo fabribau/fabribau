@@ -43,6 +43,7 @@ export const ui = {
         linkCopied: '¡Enlace copiado!',
         subscribe: 'Suscríbete al newsletter',
         subscribeDesc: 'Recibe nuevos posts directamente en tu email.',
+        likePrompt: '¿Te gustó este post? ¡Dejame un like!',
     },
 
     // Projects
