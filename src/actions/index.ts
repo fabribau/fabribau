@@ -1,4 +1,10 @@
 import { defineAction, ActionError } from 'astro:actions';
+import {
+  TURNSTILE_SECRET_KEY,
+  RESEND_API_KEY,
+  RESEND_FROM_EMAIL,
+  CONTACT_EMAIL,
+} from 'astro:env/server';
 import { z } from 'astro:schema';
 import { Resend } from 'resend';
 
@@ -16,7 +22,6 @@ export const server = {
       'cf-turnstile-response': z.string().optional(),
     }),
     handler: async (input, context) => {
-      const runtimeEnv = (context.locals as any).runtime?.env;
       // ── 1. Honeypot check ──────────────────────────────────────────────
       // If this field has a value, it's a bot — simulate success to avoid alerting it
       if (input.website && input.website.trim().length > 0) {
@@ -25,7 +30,7 @@ export const server = {
       }
 
       // ── 2. Cloudflare Turnstile verification ───────────────────────────
-      const turnstileSecret = runtimeEnv?.TURNSTILE_SECRET_KEY ?? import.meta.env.TURNSTILE_SECRET_KEY;
+      const turnstileSecret = TURNSTILE_SECRET_KEY;
       const turnstileToken = input['cf-turnstile-response'];
 
       if (!turnstileSecret || !turnstileToken) {
@@ -58,9 +63,9 @@ export const server = {
       }
 
       // ── 3. Email setup ─────────────────────────────────────────────────
-      const resendApiKey = runtimeEnv?.RESEND_API_KEY ?? import.meta.env.RESEND_API_KEY;
-      const resendFromEmail = runtimeEnv?.RESEND_FROM_EMAIL ?? import.meta.env.RESEND_FROM_EMAIL;
-      const contactEmail = runtimeEnv?.CONTACT_EMAIL ?? import.meta.env.CONTACT_EMAIL;
+      const resendApiKey = RESEND_API_KEY;
+      const resendFromEmail = RESEND_FROM_EMAIL;
+      const contactEmail = CONTACT_EMAIL;
 
       if (!resendApiKey || !resendFromEmail || !contactEmail) {
         throw new ActionError({

@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { GOOGLE_API_KEY } from "astro:env/server";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { streamText } from "ai";
 
@@ -25,7 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
   const systemPrompt = `Eres un asistente que conoce a Fabrizio Riera Bauer...`;
 
   const google = createGoogleGenerativeAI({
-    apiKey: import.meta.env.GOOGLE_API_KEY,
+    apiKey: GOOGLE_API_KEY,
   });
 
   const result = streamText({

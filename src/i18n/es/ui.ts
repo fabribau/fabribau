@@ -21,7 +21,7 @@ export const ui = {
         greeting: 'Hola, soy',
         name: 'Fabrizio Riera Bauer',
         tagline: 'Ingeniero en Informática · Desarrollador · Docente Universitario',
-        description: 'Construyo software con propósito, enseño lo que aprendo y escribo sobre tecnología, IA y desarrollo web.',
+        description: 'Construyo software con propósito, enseño lo que aprendo y escribo sobre tecnología, IA y desarrollo',
         ctaProjects: 'Ver proyectos',
         ctaBlog: 'Leer el blog',
         recentPosts: 'Últimas publicaciones',
