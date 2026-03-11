@@ -1,0 +1,87 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Link inválido — FabRiBau"
+  description="El link de confirmación no es válido o ya no está activo."
+>
+  <section class="nl-page container-prose">
+    <div class="nl-card animate-fade-up">
+      <div class="nl-icon" aria-hidden="true">⚠️</div>
+      <h1 class="nl-title">Link inválido o expirado</h1>
+      <p class="nl-body">
+        Este link de confirmación no es válido o ya no está activo. Puede que
+        hayas enviado el formulario más de una vez y este link corresponda a un
+        intento anterior.
+      </p>
+      <p class="nl-hint">
+        Si todavía querés suscribirte, enviá el formulario de nuevo y usá el
+        link del email más reciente que te llegue.
+      </p>
+      <a href="/" class="nl-btn">Volver al inicio</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nl-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 3rem 1.5rem;
+  }
+
+  .nl-card {
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+  }
+
+  .nl-icon {
+    font-size: 3rem;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+
+  .nl-title {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+  }
+
+  .nl-body {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  .nl-hint {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .nl-btn {
+    display: inline-block;
+    padding: 0.75rem 1.75rem;
+    background: var(--color-accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: all 200ms ease;
+  }
+
+  .nl-btn:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+  }
+</style>

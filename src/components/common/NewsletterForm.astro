@@ -1,0 +1,340 @@
+---
+/**
+ * NewsletterForm — componente reutilizable de suscripción Double Opt-In.
+ * Incluye honeypot, Turnstile y envío async via actions.newsletter.subscribe.
+ *
+ * Uso:
+ *   <NewsletterForm />
+ *
+ * Requiere el script de Turnstile en la página padre:
+ *   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+ * O bien importarlo con <NewsletterForm includeTurnstileScript />
+ */
+
+import { PUBLIC_TURNSTILE_SITE_KEY } from 'astro:env/client';
+
+interface Props {
+  /** Si es true, inyecta el script de Turnstile automáticamente */
+  includeTurnstileScript?: boolean;
+}
+
+const { includeTurnstileScript = false } = Astro.props;
+---
+
+<div class="nl-form-wrapper">
+  <!-- Estado: idle / loading → formulario visible -->
+  <form id="newsletter-form" class="nl-form" novalidate>
+    <p class="nl-label">Newsletter</p>
+    <h2 class="nl-heading">Escribo sobre desarrollo y tecnología</h2>
+    <p class="nl-description">
+      Sin spam. Solo artículos y proyectos que vale la pena leer, cuando los publico.
+    </p>
+
+    <!-- Email input -->
+    <div class="nl-input-row">
+      <div class="nl-input-group">
+        <label for="nl-email" class="nl-input-label">Email</label>
+        <input
+          type="email"
+          id="nl-email"
+          name="email"
+          required
+          maxlength="320"
+          placeholder="tu@email.com"
+          class="nl-input"
+          autocomplete="email"
+        />
+      </div>
+      <button type="submit" id="nl-submit" class="nl-btn">
+        <span id="nl-btn-text">Suscribirme</span>
+        <span id="nl-btn-spinner" class="spinner" aria-hidden="true" hidden></span>
+      </button>
+    </div>
+
+    <!-- Honeypot: invisible para humanos, bots lo completan -->
+    <div class="hp-field" aria-hidden="true">
+      <label for="nl-b-name">Name</label>
+      <input
+        type="text"
+        id="nl-b-name"
+        name="b_name"
+        tabindex="-1"
+        autocomplete="off"
+      />
+    </div>
+
+    <!-- Cloudflare Turnstile -->
+    <div
+      class="cf-turnstile nl-turnstile"
+      data-sitekey={PUBLIC_TURNSTILE_SITE_KEY}
+      data-theme="auto"
+      data-size="flexible"
+    >
+    </div>
+
+    <!-- Mensaje de error inline -->
+    <p id="nl-error" class="nl-status nl-status--error" aria-live="assertive" hidden></p>
+  </form>
+
+  <!-- Estado: éxito → reemplaza el form -->
+  <div id="nl-success" class="nl-success" hidden>
+    <div class="nl-success-icon" aria-hidden="true">✉️</div>
+    <h2 class="nl-success-title">¡Revisá tu email!</h2>
+    <p class="nl-success-body">
+      Te mandé un link de confirmación. Hacé clic en él para completar
+      tu suscripción.
+    </p>
+  </div>
+</div>
+
+{includeTurnstileScript && (
+  <script
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer
+  ></script>
+)}
+
+<style>
+  .nl-form-wrapper {
+    width: 100%;
+  }
+
+  /* Form */
+  .nl-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nl-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    margin: 0;
+  }
+
+  .nl-heading {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .nl-description {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Input row */
+  .nl-input-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .nl-input-group {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .nl-input-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+
+  .nl-input {
+    padding: 0.65rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.375rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 0.9375rem;
+    font-family: var(--font-body);
+    width: 100%;
+    transition: border-color 200ms ease;
+  }
+
+  .nl-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  /* Submit button */
+  .nl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 200ms ease;
+    flex-shrink: 0;
+  }
+
+  .nl-btn:hover:not(:disabled) {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+  }
+
+  .nl-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .spinner {
+    width: 1em;
+    height: 1em;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    display: inline-block;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Honeypot */
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Turnstile widget */
+  .nl-turnstile {
+    max-width: 100%;
+  }
+
+  /* Status messages */
+  .nl-status {
+    font-size: 0.875rem;
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+  }
+
+  .nl-status--error {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
+  }
+
+  /* Success state */
+  .nl-success {
+    text-align: center;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background: var(--color-surface);
+  }
+
+  .nl-success-icon {
+    font-size: 2.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .nl-success-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.5rem;
+  }
+
+  .nl-success-body {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>
+
+<script>
+  import { actions, isInputError } from 'astro:actions';
+
+  const form    = document.getElementById('newsletter-form') as HTMLFormElement | null;
+  const submitBtn  = document.getElementById('nl-submit')    as HTMLButtonElement | null;
+  const btnText    = document.getElementById('nl-btn-text')  as HTMLSpanElement | null;
+  const btnSpinner = document.getElementById('nl-btn-spinner') as HTMLSpanElement | null;
+  const errorMsg   = document.getElementById('nl-error')     as HTMLParagraphElement | null;
+  const successDiv = document.getElementById('nl-success')   as HTMLDivElement | null;
+
+  if (!form || !submitBtn) throw new Error('[NewsletterForm] Elementos no encontrados');
+
+  const showError = (msg: string) => {
+    if (!errorMsg) return;
+    errorMsg.textContent = msg;
+    errorMsg.hidden = false;
+  };
+
+  const clearError = () => {
+    if (!errorMsg) return;
+    errorMsg.textContent = '';
+    errorMsg.hidden = true;
+  };
+
+  const setLoading = (loading: boolean) => {
+    if (!submitBtn || !btnText || !btnSpinner) return;
+    submitBtn.disabled = loading;
+    btnText.hidden = loading;
+    btnSpinner.hidden = !loading;
+  };
+
+  const showSuccess = () => {
+    if (!form || !successDiv) return;
+    form.hidden = true;
+    successDiv.hidden = false;
+  };
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearError();
+    setLoading(true);
+
+    try {
+      const formData = new FormData(form);
+      const { error } = await actions.newsletter.subscribe(formData);
+
+      if (error) {
+        if (isInputError(error)) {
+          const firstMsg = Object.values(error.fields)[0]?.[0];
+          showError(firstMsg ?? 'Datos inválidos. Revisá el formulario.');
+        } else {
+          showError(error.message || 'Hubo un error. Intentá de nuevo.');
+        }
+        // Reset Turnstile on error
+        if (typeof (window as any).turnstile !== 'undefined') {
+          (window as any).turnstile.reset();
+        }
+      } else {
+        showSuccess();
+      }
+    } catch {
+      showError('No se pudo conectar con el servidor. Intentá de nuevo.');
+    } finally {
+      setLoading(false);
+    }
+  });
+</script>

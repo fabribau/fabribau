@@ -25,6 +25,7 @@ export default defineConfig({
             CONTACT_EMAIL: envField.string({ context: 'server', access: 'secret' }),
             TURNSTILE_SECRET_KEY: envField.string({ context: 'server', access: 'secret' }),
             PUBLIC_TURNSTILE_SITE_KEY: envField.string({ context: 'client', access: 'public' }),
+            NEWSLETTER_SITE_URL: envField.string({ context: 'server', access: 'public' }),
         }
     }
 });

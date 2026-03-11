@@ -1,4 +1,5 @@
 import { defineAction, ActionError } from 'astro:actions';
+import { newsletter } from './newsletter';
 import {
   TURNSTILE_SECRET_KEY,
   RESEND_API_KEY,
@@ -10,6 +11,8 @@ import { Resend } from 'resend';
 import { checkRateLimit } from '../lib/rateLimit';
 
 export const server = {
+  // ── Newsletter ─────────────────────────────────────────────────────────────
+  newsletter,
   // ── Likes ─────────────────────────────────────────────────────────────────
   incrementLike: defineAction({
     input: z.object({

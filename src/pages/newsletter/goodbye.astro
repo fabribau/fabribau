@@ -1,0 +1,93 @@
+---
+export const prerender = true;
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Te diste de baja — FabRiBau"
+  description="Tu baja del newsletter de FabRiBau fue procesada exitosamente."
+>
+  <section class="nl-page container-prose">
+    <div class="nl-card animate-fade-up">
+      <div class="nl-icon" aria-hidden="true">👋</div>
+      <h1 class="nl-title">¡Hasta la próxima!</h1>
+      <p class="nl-body">
+        Te di de baja de mi newsletter. Ya no te voy a escribir más emails.
+      </p>
+      <p class="nl-hint">
+        Si fue un error, podés volverte a suscribir cuando quieras.
+      </p>
+      <div class="nl-actions">
+        <a href="/" class="nl-btn">Volver al inicio</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nl-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 3rem 1.5rem;
+  }
+
+  .nl-card {
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+  }
+
+  .nl-icon {
+    font-size: 3rem;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+
+  .nl-title {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+  }
+
+  .nl-body {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  .nl-hint {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .nl-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .nl-btn {
+    display: inline-block;
+    padding: 0.75rem 1.75rem;
+    background: var(--color-accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: all 200ms ease;
+  }
+
+  .nl-btn:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+  }
+</style>

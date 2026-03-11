@@ -11,3 +11,18 @@ CREATE TABLE IF NOT EXISTS rate_limits (
   count        INTEGER NOT NULL DEFAULT 1,
   window_start INTEGER NOT NULL      -- Unix timestamp en ms
 );
+
+-- Suscriptores al newsletter (Double Opt-In)
+CREATE TABLE IF NOT EXISTS subscribers (
+  id           INTEGER PRIMARY KEY AUTOINCREMENT,
+  email        TEXT    NOT NULL UNIQUE COLLATE NOCASE,
+  status       TEXT    NOT NULL DEFAULT 'pending',   -- 'pending' | 'confirmed' | 'unsubscribed'
+  token        TEXT    NOT NULL UNIQUE,              -- UUID v4 para confirm/unsubscribe
+  created_at   TEXT    NOT NULL DEFAULT (datetime('now')),
+  updated_at   TEXT    NOT NULL DEFAULT (datetime('now')),
+  confirmed_at TEXT,
+  source       TEXT    DEFAULT 'website'
+);
+
+CREATE INDEX IF NOT EXISTS idx_subscribers_status ON subscribers(status);
+CREATE INDEX IF NOT EXISTS idx_subscribers_token  ON subscribers(token);

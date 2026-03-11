@@ -2,6 +2,7 @@
 import BaseLayout from "./BaseLayout.astro";
 import TagBadge from "../components/blog/TagBadge.astro";
 import ShareButtons from "../components/blog/ShareButtons.astro";
+import NewsletterForm from "../components/common/NewsletterForm.astro";
 import { formatDate, getReadingTime } from "../lib/content";
 import { ui } from "../i18n/es/ui";
 
@@ -85,18 +86,7 @@ const url = Astro.url.href;
 
       <!-- Newsletter CTA -->
       <div class="newsletter-section">
-        <h3>{ui.blog.subscribe}</h3>
-        <p>{ui.blog.subscribeDesc}</p>
-        <form id="newsletter-form" class="newsletter-form">
-          <input
-            type="email"
-            name="email"
-            placeholder="tu@email.com"
-            required
-            class="newsletter-input"
-          />
-          <button type="submit" class="newsletter-btn">Suscribirme</button>
-        </form>
+        <NewsletterForm includeTurnstileScript />
       </div>
     </footer>
   </article>
@@ -260,65 +250,12 @@ const url = Astro.url.href;
     padding: 2rem;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: 0.5rem;
-    text-align: center;
-  }
-
-  .newsletter-section h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .newsletter-section p {
-    font-size: 0.9375rem;
-    color: var(--color-text-muted);
-    margin-bottom: 1rem;
-  }
-
-  .newsletter-form {
-    display: flex;
-    gap: 0.5rem;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-
-  .newsletter-input {
-    flex: 1;
-    padding: 0.625rem 1rem;
-    border: 1px solid var(--color-border);
-    border-radius: 0.375rem;
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-size: 0.9375rem;
-  }
-
-  .newsletter-input:focus {
-    border-color: var(--color-accent);
-    outline: none;
-  }
-
-  .newsletter-btn {
-    padding: 0.625rem 1.25rem;
-    background: var(--color-accent);
-    color: white;
-    border: none;
-    border-radius: 0.375rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 200ms ease;
-  }
-
-  .newsletter-btn:hover {
-    background: var(--color-accent-hover);
+    border-radius: 0.75rem;
   }
 
   @media (max-width: 640px) {
     .post-title {
       font-size: 1.75rem;
-    }
-
-    .newsletter-form {
-      flex-direction: column;
     }
   }
 </style>
@@ -407,23 +344,5 @@ const url = Astro.url.href;
     });
   }
 
-  // ── Newsletter form ─────────────────────────────────────────────────────────
-  const form = document.getElementById(
-    "newsletter-form",
-  ) as HTMLFormElement | null;
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = new FormData(form).get("email") as string;
-    try {
-      await fetch("/api/newsletter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      form.innerHTML =
-        '<p style="color: var(--color-accent);">¡Gracias por suscribirte! 🎉</p>';
-    } catch {
-      // silently fail
-    }
-  });
+  // Newsletter: manejado por NewsletterForm.astro
 </script>

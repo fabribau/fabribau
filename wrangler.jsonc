@@ -7,7 +7,9 @@
 		"global_fetch_strictly_public"
 	],
 	"vars": {
-		"PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAACnxwrlsduLpo2JD"
+		"PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAACnxwrlsduLpo2JD",
+		"NEWSLETTER_SITE_URL": 
+		"https://fabribau.tech"
 	},
 	"assets": {
 		"binding": "ASSETS",
