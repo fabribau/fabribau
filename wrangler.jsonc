@@ -8,8 +8,7 @@
 	],
 	"vars": {
 		"PUBLIC_TURNSTILE_SITE_KEY": "0x4AAAAAACnxwrlsduLpo2JD",
-		"NEWSLETTER_SITE_URL": 
-		"https://fabribau.tech"
+		"NEWSLETTER_SITE_URL": "https://fabribau.tech"
 	},
 	"assets": {
 		"binding": "ASSETS",
@@ -20,9 +19,10 @@
 	},
 	"d1_databases": [
 		{
-			"binding": "blog_metrics",
-			"database_name": "blog-metrics",
-			"database_id": "05efb5b3-5dd7-48eb-8491-06a88b6b6335"
+			"binding": "fabribau_db",
+			"database_name": "fabribau_db",
+			"database_id": "de59efe0-fb7d-4a3f-aafc-a59f324bd726",
+			"remote": true
 		}
 	]
 }

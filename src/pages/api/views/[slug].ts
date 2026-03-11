@@ -10,7 +10,7 @@ export const POST: APIRoute = async ({ params, locals, request }) => {
     return new Response(null, { status: 400 });
   }
 
-  const db = (locals as App.Locals).runtime.env.blog_metrics;
+  const db = (locals as App.Locals).runtime.env.fabribau_db;
 
   // ── Rate limiting: 5 views por IP por minuto ───────────────────────────────
   const ip =

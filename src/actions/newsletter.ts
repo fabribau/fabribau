@@ -57,7 +57,7 @@ export const newsletter = {
       }
 
       // ── Capa 3: Rate Limiting ───────────────────────────────────────────────
-      const db = (context.locals as App.Locals).runtime.env.blog_metrics;
+      const db = (context.locals as App.Locals).runtime.env.fabribau_db;
 
       const ip =
         context.request.headers.get('CF-Connecting-IP') ??

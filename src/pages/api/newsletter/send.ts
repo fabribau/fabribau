@@ -178,7 +178,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return json({ error: '"slug" y "title" son obligatorios.' }, 400);
   }
 
-  const db = (locals as App.Locals).runtime.env.blog_metrics;
+  const db = (locals as App.Locals).runtime.env.fabribau_db;
 
   // ── 4. Anti double-send ─────────────────────────────────────────────────────
   if (!preview) {

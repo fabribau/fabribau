@@ -11,7 +11,7 @@ export const GET: APIRoute = async ({ request, locals, redirect }) => {
     return redirect('/newsletter/goodbye', 302);
   }
 
-  const db = (locals as App.Locals).runtime.env.blog_metrics;
+  const db = (locals as App.Locals).runtime.env.fabribau_db;
 
   try {
     await db

@@ -19,7 +19,7 @@ export const server = {
       slug: z.string().min(1, 'El slug no puede estar vacío'),
     }),
     handler: async (input, context) => {
-      const db = (context.locals as App.Locals).runtime.env.blog_metrics;
+      const db = (context.locals as App.Locals).runtime.env.fabribau_db;
 
       // ── Rate limiting: 3 likes por IP por minuto ─────────────────────────
       const ip =
