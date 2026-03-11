@@ -21,8 +21,7 @@
 		{
 			"binding": "fabribau_db",
 			"database_name": "fabribau_db",
-			"database_id": "de59efe0-fb7d-4a3f-aafc-a59f324bd726",
-			"remote": true
+			"database_id": "de59efe0-fb7d-4a3f-aafc-a59f324bd726"
 		}
 	]
 }
